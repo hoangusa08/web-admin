@@ -31,7 +31,6 @@ export default function Login() {
        
     }
     const handleKeypress = e => {
-        console.log(e);
         //it triggers by pressing the enter key
       if (e.charCode === 13) {
         OnSubmitHandle();
@@ -41,14 +40,19 @@ export default function Login() {
     return (
         <div className="login">
             <div className="login-form">
+            <h3>Login</h3>
+                <div className="row">
                 <h3>Username:</h3>
                 <input type="text" placeholder="Username" onKeyPress={handleKeypress}
                 onChange={e => setuserInput({...userInput ,username : e.target.value})} value={userInput.username}/>
                 <br></br>
-                <h3>Password:</h3>
+                </div>
+                <div className="row">
+                <h3>Password :</h3>
                 <input type="password" placeholder="Password" onKeyPress={handleKeypress}
                 onChange={e => setuserInput({...userInput ,password : e.target.value})} value={userInput.password}/>
                 <br></br>
+                </div>
                 <input type="button" value="Login" className="login-button"
                 onClick={OnSubmitHandle}/>
                 <br></br>        

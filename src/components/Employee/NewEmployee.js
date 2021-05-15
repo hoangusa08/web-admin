@@ -1,13 +1,15 @@
-import axios from 'axios';
-import React, { useState } from 'react'
+import Api from '../Config/Api';
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router';
+import {LoginContext} from '../Context/LoginContext'
 
 export default function NewEmployee() {
     const history=useHistory();
+    const check = useContext(LoginContext);
     const [user , setuser] = useState({
         username: "",
         password: "",
-        fullname: "",
+        fullName: "",
         address: "",
         email: "",
         phoneNumber: "",
@@ -19,6 +21,7 @@ export default function NewEmployee() {
         if( user.fullname === "" || user.phone_number === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
             setmessage("You have not entered enough");
         }else {
+            console.log(user)
             if(RetypePassword !== user.password){
                 setmessage(" Retype Password Don't Correct ");
             }
@@ -26,36 +29,29 @@ export default function NewEmployee() {
                 let token = {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
-                axios.post("http://localhost:9090/api/v1/admin/user", user , token).then((response)=> {
+                Api.post("admin/user",user ,token).then((response)=> {
                     alert(response.data.message);
                     history.push("/employee")
                 }).catch((error) =>{
                     alert(error.response.data.message);
+                    console.log(error.response.data);
                 });
             }
         }
     }
     return (
+        <>
+        {(check.IsLogin === false ) ? (
+            <div className="page-wrapper">
+                <h3 style={{textAlign : "center"}}>you need login</h3>
+            </div>
+        ) : (
         <div className="page-wrapper">
-        <div className="page-breadcrumb">
-            <div className="row">
+            <div className="page-breadcrumb">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">New Customer</h4>
-                </div>
-                <div className="col-7 align-self-center">
-                    <div className="d-flex align-items-center justify-content-end">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li className="breadcrumb-item active" aria-current="page">New Customer</li>
-                            </ol>
-                        </nav>
-                    </div>
+                    <h4 className="page-title">New Employee</h4>
                 </div>
             </div>
-        </div>
         <div className="container-fluid">
             <div className="row">
                 <div className="col-12">
@@ -65,7 +61,7 @@ export default function NewEmployee() {
                             <div className="form-group">
                                 <label>Full Name</label>
                                 <input type="text" className="form-control"
-                                onChange={e => setuser({...user ,fullname : e.target.value})} value={user.fullName}></input>
+                                onChange={e => setuser({...user ,fullName : e.target.value})} value={user.fullName}></input>
                             </div>
                             <div className="form-group">
                                 <label>User Name</label>
@@ -101,7 +97,7 @@ export default function NewEmployee() {
                                     {message && (
                                         <div className="error-mesage"><h3>{message}</h3></div>
                                     )}
-                                <button type="button" name="example-email" className="btn" onClick={register}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={register}>Save </button>
                             </div>
                         </form>
                     </div>
@@ -109,5 +105,7 @@ export default function NewEmployee() {
             </div>
         </div>
     </div>
+       )}
+       </>
     )
 }

@@ -132,8 +132,9 @@ html {
   width: 600px;
 }
 .login-form h3 {
-  margin-left:4px;
+  margin : auto;
   color:#fff;
+  font-size: 30px;
 }
 .login-form {
   box-sizing:border-box;
@@ -149,6 +150,7 @@ html {
   line-height:3em;
   font-family: 'Ubuntu', sans-serif;
   margin:1em 2em;
+  margin-left: 0px;
   border-radius:5px;
   border:2px solid #f2f2f2;
   outline:none;
@@ -190,7 +192,8 @@ input[type="button"]:hover{
     margin:10px 0;
   }
   .login-button {
-    margin-bottom:10px;
+   margin: auto;
+    margin-top: 10px;
   }
 }
 /*end form login */

@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
 import Api from '../Config/Api';
+import {LoginContext} from '../Context/LoginContext'
 
 export default function NewImage() {
     const [message , setmessage] = useState("");
@@ -9,6 +9,7 @@ export default function NewImage() {
         name : "",
         link : ""
     });
+    const check = useContext(LoginContext);
     var idImage = window.location.pathname.split('/')
     var token = {
         headers: {
@@ -40,24 +41,16 @@ export default function NewImage() {
         }
     }
     return (
+        <>
+        {(check.IsLogin === false ) ? (
+            <div className="page-wrapper">
+                <h3 style={{textAlign : "center"}}>you need login</h3>
+            </div>
+        ) : (
         <div className="page-wrapper">
             <div className="page-breadcrumb">
-                <div className="row">
-                    <div className="col-5 align-self-center">
-                        <h4 className="page-title">Edit Image</h4>
-                    </div>
-                    <div className="col-7 align-self-center">
-                        <div className="d-flex align-items-center justify-content-end">
-                            <nav aria-label="breadcrumb">
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item">
-                                        <a href="#">Home</a>
-                                    </li>
-                                    <li className="breadcrumb-item active" aria-current="page">New Image</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
+                <div className="col-5 align-self-center">
+                    <h4 className="page-title">Edit Image</h4>
                 </div>
             </div>
             <div className="container-fluid">
@@ -76,8 +69,13 @@ export default function NewImage() {
                                     <input type="text" className="form-control" 
                                     onChange={e => setnewvalue({...newvalue ,link : e.target.value})} value={newvalue.link}></input>
                                 </div>
+                                { (message === "") ? (
+                                         <></>
+                                    ) : (
+                                        <p>{message}</p>
+                                    )}
                                 <div className="form-group">
-                                    <button type="button" name="example-email" className="btn" onClick={saveImage}>Save </button>
+                                    <button type="button" name="example-email" className="btn btn-info" onClick={saveImage}>Save </button>
                                 </div>
                             </form>
                         </div>
@@ -85,5 +83,7 @@ export default function NewImage() {
                 </div>
             </div>
         </div>
+     )}
+     </>
     )
 }

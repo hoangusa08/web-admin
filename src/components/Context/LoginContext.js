@@ -9,7 +9,6 @@ const LoginContextProvider =({children}) =>{
     const [employer , setemployer] = useState("");
     const [isLogin , setisLogin] = useState(false);
     const history = useHistory();
-    var checktoken = "";
     // function dispatch
     const LoginDispatch = () =>{
         setId(localStorage.getItem('id'));

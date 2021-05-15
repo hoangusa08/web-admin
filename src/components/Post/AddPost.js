@@ -43,33 +43,22 @@ function AddPost(props) {
         <>
         {(check.IsLogin === false ) ? (
             <div className="page-wrapper">
-                <h3 style={{textAlign : "center"}}>you need login</h3>
+                <h3 style={{textAlign : "center"}}>You need login</h3>
             </div>
         ) : (
         <div className="page-wrapper">
         <div className="page-breadcrumb">
-            <div className="row">
-                <div className="col-5 align-self-center">
-                    <h4 className="page-title">New Product</h4>
-                </div>
-                <div className="col-7 align-self-center">
-                    <div className="d-flex align-items-center justify-content-end">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li className="breadcrumb-item active" aria-current="page">New Product</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
+    
+            <div className="col-5 align-self-center">
+                <h4 className="page-title">Post</h4>
             </div>
+ 
         </div>
         <div className="container-fluid">
             <div className="row">
                 <div className="col-12">
                     <div className="card card-body">
+                        <h4 className="card-title">New Post</h4>
                         <form className="form-horizontal m-t-30">
                             <div className="form-group">
                                 <label for="name">Title</label>

@@ -2,7 +2,9 @@ import React, {  useContext, useEffect} from 'react';
 import { Link} from 'react-router-dom';
 import {LoginContext} from '../Context/LoginContext'
 import {Dropdown } from 'react-bootstrap'
+import { useHistory} from 'react-router-dom'
 function Header() {
+    const history = useHistory()
     const login = useContext(LoginContext);
     var fullname = login.Fullname;
     useEffect(() => {
@@ -10,6 +12,9 @@ function Header() {
     }, [fullname])
     const LogoutHandle = () =>{
         login.LogoutDispatch();
+    }
+    const Account = () =>{
+        history.push(`/myaccount`)
     }
     return (
         <div className="topbar" data-navbarbg="skin6">
@@ -52,6 +57,7 @@ function Header() {
 
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={LogoutHandle}  >logout</Dropdown.Item>
+                                        {localStorage.getItem("roleNames")==="employee" &&<Dropdown.Item onClick={Account}  >Account</Dropdown.Item>}
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </li>

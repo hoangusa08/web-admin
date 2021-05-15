@@ -1,10 +1,13 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect, useContext} from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import Api from '../Config/Api';
 import Pagination from '../Pagination';
+import {LoginContext} from '../Context/LoginContext'
+
 export default function Color() {
     const [ListColor , setListColor] = useState([]);
     const history = useHistory();
+    const check = useContext(LoginContext);
     const [filters, setFilters] = useState({
         page: 0,
         id : 0
@@ -48,24 +51,16 @@ export default function Color() {
         }); 
     }
     return (
+        <>
+        {(check.IsLogin === false ) ? (
+            <div className="page-wrapper">
+                <h3 style={{textAlign : "center"}}>you need login</h3>
+            </div>
+        ) : (
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
-                    <div className="row">
-                        <div className="col-5 align-self-center">
-                            <h4 className="page-title">Color</h4>
-                        </div>
-                        <div className="col-7 align-self-center">
-                            <div className="d-flex align-items-center justify-content-end">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/">Home</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Color</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+                    <div className="col-5 align-self-center">
+                        <h4 className="page-title">Color</h4>
                     </div>
                 </div>
                 <div className="container-fluid">
@@ -73,9 +68,9 @@ export default function Color() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 class="card-title">List Color <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button></h4>
+                                        <h4 className="card-title">List Color <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button></h4>
                                 </div>
-                                <div class="table-responsive">
+                                <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
@@ -88,11 +83,10 @@ export default function Color() {
                                         <tbody>
                                         
                                             {ListColor.map((Color) => (
-                                                <tr>
+                                                <tr key={Color.id}>
                                                     <th scope="row">{Color.id}</th>
                                                     <td>{Color.name}</td>
-                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editColor/${Color.id}`)}}>Edit</button> 
-                                                    <button className="btn btn-danger" onClick={deleteColor.bind(this,Color.id)}>Delete</button></td>
+                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editColor/${Color.id}`)}}>Edit</button> <button className="btn btn-danger" onClick={deleteColor.bind(this,Color.id)}>Delete</button></td>
                                               </tr>
                                             ))}
                                         </tbody>
@@ -107,5 +101,7 @@ export default function Color() {
                     </div>
                 </div>
             </div>
+        )}
+        </>
     )
 }

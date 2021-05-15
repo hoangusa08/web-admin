@@ -70,6 +70,12 @@ function Sidebar() {
                                             <span className="hide-menu">Invoice</span>
                                         </Link>
                                     </li>
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/customer" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Customer</span>
+                                        </Link>
+                                    </li>
                                 </ul>
                             ) : (
                                 <ul id="sidebarnav">

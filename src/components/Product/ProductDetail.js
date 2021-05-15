@@ -32,23 +32,9 @@ export default function ProductDetail() {
         ) : (
         <div className="page-wrapper">
         <div className="page-breadcrumb">
-            <div className="row">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">New Product</h4>
+                    <h4 className="page-title">Product Detail</h4>
                 </div>
-                <div className="col-7 align-self-center">
-                    <div className="d-flex align-items-center justify-content-end">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li className="breadcrumb-item active" aria-current="page">New Product</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
         </div>
         <div className="container-fluid">
             <div className="row">
@@ -56,24 +42,24 @@ export default function ProductDetail() {
                     <div className="card card-body">
                         <form className="form-horizontal m-t-30">
                         <div className="form-group">
-                                <label for="name">Id</label>
+                                <label htmlFor="name">Id</label>
                                 <input type="text" className="form-control" value={datainput.id} id="name" disabled/>
                             </div>
                             <div className="form-group">
-                                <label for="name">Name</label>
+                                <label htmlFor="name">Name</label>
                                 <input type="text" className="form-control" value={datainput.name} id="name" disabled/>
                             </div>
                             <div className="form-group">
-                                <label  for="price">Price</label>
+                                <label  htmlFor="price">Price</label>
                                 <input type="text" className="form-control" value={datainput.price} id="price" disabled/>
                             </div>
                             <div className="form-group">
-                                <label for="number_of_star">Number of star</label>
+                                <label htmlFor="number_of_star">Number of star</label>
                                 <input type="text" className="form-control"  value={datainput.number_of_star} id="number_of_star" disabled
                                  />
                             </div>
                             <div className="form-group">
-                                <label for="des">Description</label>
+                                <label htmlFor="des">Description</label>
                                 <CKEditor
                                     disabled
                                     editor={ ClassicEditor }
@@ -89,22 +75,22 @@ export default function ProductDetail() {
                             </div>
                             <div className="form-group">
                                 <div className="row">
-                                    <label className="idlabel" for="brand">Brand</label>
+                                    <label className="idlabel" htmlFor="brand">Brand</label>
                                     <input className="col-md-3" id="brand" value={datainput.brandName} disabled />
-                                    <label className="idlabel" for="category">Category</label>
+                                    <label className="idlabel" htmlFor="category">Category</label>
                                     <input className="col-md-3" id="brand" value={datainput.categoryName} disabled />
-                                    <label className="idlabel" for="category">Image</label>
+                                    <label className="idlabel" htmlFor="category">Image</label>
                                     <input className="col-md-3" id="brand" value={datainput.iamgeName} disabled />
                                 </div>
                             </div>
                             { (datainput.m !== "") ? (
                                  <div className="form-group">
                                     <div className="row">
-                                        <label className="idlabel" for="size">Size  :</label>
+                                        <label className="idlabel" htmlFor="size">Size  :</label>
                                         <input className="col-md-3" id="brand" value="M" disabled />
-                                        <label className="idlabel" for="Color">Color</label>
+                                        <label className="idlabel" htmlFor="Color">Color</label>
                                         <input className="col-md-3" id="brand" value={datainput.m} disabled />
-                                        <label className="idlabel" for="image">Number</label>
+                                        <label className="idlabel" htmlFor="image">Number</label>
                                         <input className="col-md-3" id="brand" value={datainput.m_Number} disabled />
                                     </div>
                                 </div>
@@ -114,11 +100,11 @@ export default function ProductDetail() {
                              { (datainput.xxl !== "") ? (
                                  <div className="form-group">
                                     <div className="row">
-                                        <label className="idlabel" for="size">Size  :</label>
+                                        <label className="idlabel" htmlFor="size">Size  :</label>
                                         <input className="col-md-3" id="brand" value="XXL" disabled />
-                                        <label className="idlabel" for="Color">Color</label>
+                                        <label className="idlabel" htmlFor="Color">Color</label>
                                         <input className="col-md-3" id="brand" value={datainput.xxl} disabled />
-                                        <label className="idlabel" for="image">Number</label>
+                                        <label className="idlabel" htmlFor="image">Number</label>
                                         <input className="col-md-3" id="brand" value={datainput.xxl_Number} disabled />
                                     </div>
                                 </div>
@@ -128,11 +114,11 @@ export default function ProductDetail() {
                              { (datainput.l !== "") ? (
                                  <div className="form-group">
                                     <div className="row">
-                                        <label className="idlabel" for="size">Size  :</label>
+                                        <label className="idlabel" htmlFor="size">Size  :</label>
                                         <input className="col-md-3" id="brand" value="L" disabled />
-                                        <label className="idlabel" for="Color">Color</label>
+                                        <label className="idlabel" htmlFor="Color">Color</label>
                                         <input className="col-md-3" id="brand" value={datainput.l} disabled />
-                                        <label className="idlabel" for="image">Number</label>
+                                        <label className="idlabel" htmlFor="image">Number</label>
                                         <input className="col-md-3" id="brand" value={datainput.l_Number} disabled />
                                     </div>
                                 </div>
@@ -142,11 +128,11 @@ export default function ProductDetail() {
                              { (datainput.xl !== "") ? (
                                  <div className="form-group">
                                     <div className="row">
-                                        <label className="idlabel" for="size">Size  :</label>
+                                        <label className="idlabel" htmlFor="size">Size  :</label>
                                         <input className="col-md-3" id="brand" value="XL" disabled />
-                                        <label className="idlabel" for="Color">Color</label>
+                                        <label className="idlabel" htmlFor="Color">Color</label>
                                         <input className="col-md-3" id="brand" value={datainput.xl} disabled />
-                                        <label className="idlabel" for="image">Number</label>
+                                        <label className="idlabel" htmlFor="image">Number</label>
                                         <input className="col-md-3" id="brand" value={datainput.xl_Number} disabled />
                                     </div>
                                 </div>

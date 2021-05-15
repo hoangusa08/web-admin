@@ -1,11 +1,12 @@
-import React , {useState , useEffect} from 'react'
-import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom';
+import React , {useState , useEffect, useContext} from 'react'
+import {useHistory } from 'react-router-dom';
 import Api from '../Config/Api';
 import Pagination from '../Pagination';
+import {LoginContext} from '../Context/LoginContext'
 export default function Image() {
     const [Listimage , setListimage] = useState([]);
     const history = useHistory();
+    const check = useContext(LoginContext);
     const [filters, setFilters] = useState({
         page: 0,
         id : 0
@@ -42,40 +43,32 @@ export default function Image() {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
-        axios.delete(`http://localhost:9090/api/v1/image/${id}`,token).then((response)=> {
+        Api.delete(`image/${id}`,token).then((response)=> {
             setFilters({...filters, id :id});
         }).catch((error) =>{
         });
     }
     return (
+        <>
+        {(check.IsLogin === false ) ? (
+            <div className="page-wrapper">
+                <h3 style={{textAlign : "center"}}>you need login</h3>
+            </div>
+        ) : (
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
-                    <div className="row">
                         <div className="col-5 align-self-center">
-                            <h4 className="page-title">image</h4>
+                            <h4 className="page-title">Image</h4>
                         </div>
-                        <div className="col-7 align-self-center">
-                            <div className="d-flex align-items-center justify-content-end">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/">Home</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active" aria-current="page">image</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 class="card-title">List image <button className="btn1 btn btn-success" onClick ={e => {history.push("/newimage")}}>new</button></h4>
+                                        <h4 className="card-title">List image <button className="btn1 btn btn-success" onClick ={e => {history.push("/newimage")}}>new</button></h4>
                                 </div>
-                                <div class="table-responsive">
+                                <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
@@ -89,12 +82,11 @@ export default function Image() {
                                         <tbody>
                                         
                                             {Listimage.map((image) => (
-                                                <tr>
+                                                <tr key={image.id}>
                                                     <th scope="row">{image.id}</th>
                                                     <td>{image.name}</td>
                                                     <td><a href={image.link} target="_blank"> click in here </a>  </td>
-                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editimage/${image.id}`)}}>Edit</button> 
-                                                    <button className="btn btn-danger" onClick={deleteimage.bind(this,image.id)}>Delete</button></td>
+                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editimage/${image.id}`)}}>Edit</button> <button className="btn btn-danger" onClick={deleteimage.bind(this,image.id)}>Delete</button></td>
                                               </tr>
                                             ))}
                                         </tbody>
@@ -109,5 +101,7 @@ export default function Image() {
                     </div>
                 </div>
             </div>
+         )}
+         </>
     )
 }

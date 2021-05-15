@@ -12,8 +12,13 @@ const tableStyle = {
 
 const thStyle = {
 //   border: '1px solid black',
-  width: '300px',
+  width: '400px',
   overflow: 'hidden'
+}
+
+const titleStyle = {
+    width: '200px',
+    overflow: 'hidden'
 }
 
 function Post() {
@@ -97,23 +102,11 @@ function Post() {
     return (
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
-                    <div className="row">
-                        <div className="col-5 align-self-center">
-                            <h4 className="page-title">Post</h4>
-                        </div>
-                        <div className="col-7 align-self-center">
-                            <div className="d-flex align-items-center justify-content-end">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/">Home</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Post</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+
+                    <div className="col-5 align-self-center">
+                        <h4 className="page-title">Post</h4>
                     </div>
+
                 </div>
                 <div className="container-fluid">
                     <div className="row">
@@ -127,8 +120,8 @@ function Post() {
                                         <thead>
                                             <tr>
                                                 <th scope="col">Id</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col" style = {thStyle}>Title</th>
+                                                {/* <th scope="col">Name</th> */}
+                                                <th scope="col" style = {titleStyle}>Title</th>
                                                 <th scope="col" style = {thStyle}>Content</th>
                                                 {/* <th scope="col">Detail</th> */}
                                                 <th scope="col">Action</th>
@@ -139,7 +132,7 @@ function Post() {
                                             {ListPost.map((Post) => (
                                                 <tr key={Post.id}>
                                                     <th scope="row">{Post.id}</th>
-                                                    <td>{Post.name}</td>
+                                                    {/* <td>{Post.name}</td> */}
                                                     <td>{Post.title}</td>
                                                     {/* <td></td> */}
                                                     <td>{Post.content}</td>

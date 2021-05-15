@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Api from '../Config/Api';
+import {LoginContext} from '../Context/LoginContext'
 
 export default function NewImage() {
     const [message , setmessage] = useState("");
@@ -8,6 +8,7 @@ export default function NewImage() {
         name : "",
         link : ""
     });
+    const check = useContext(LoginContext);
     const saveImage =  (e) =>{
         if( newvalue.name === "" || newvalue.link ==="" ) {
             setmessage("You have not entered enough");
@@ -26,24 +27,16 @@ export default function NewImage() {
         }
     }
     return (
+        <>
+        {(check.IsLogin === false ) ? (
+            <div className="page-wrapper">
+                <h3 style={{textAlign : "center"}}>you need login</h3>
+            </div>
+        ) : (
         <div className="page-wrapper">
             <div className="page-breadcrumb">
-                <div className="row">
-                    <div className="col-5 align-self-center">
-                        <h4 className="page-title">New Image</h4>
-                    </div>
-                    <div className="col-7 align-self-center">
-                        <div className="d-flex align-items-center justify-content-end">
-                            <nav aria-label="breadcrumb">
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item">
-                                        <a href="#">Home</a>
-                                    </li>
-                                    <li className="breadcrumb-item active" aria-current="page">New Image</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
+                <div className="col-5 align-self-center">
+                    <h4 className="page-title">New Image</h4>
                 </div>
             </div>
             <div className="container-fluid">
@@ -66,7 +59,7 @@ export default function NewImage() {
                                     message !== "" ? (<p>you need enter value</p>) :( <></>)
                                 }
                                 <div className="form-group">
-                                    <button type="button" name="example-email" className="btn" onClick={saveImage}>Save </button>
+                                    <button type="button" name="example-email" className="btn btn-info" onClick={saveImage}>Save </button>
                                 </div>
                             </form>
                         </div>
@@ -74,5 +67,7 @@ export default function NewImage() {
                 </div>
             </div>
         </div>
+     )}
+     </>
     )
 }

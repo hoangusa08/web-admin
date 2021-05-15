@@ -85,22 +85,8 @@ export default function Category() {
     return (
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
-                    <div className="row">
-                        <div className="col-5 align-self-center">
-                            <h4 className="page-title">Category</h4>
-                        </div>
-                        <div className="col-7 align-self-center">
-                            <div className="d-flex align-items-center justify-content-end">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/">Home</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Category</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+                    <div className="col-5 align-self-center">
+                        <h4 className="page-title">Category</h4>
                     </div>
                 </div>
                 <div className="container-fluid">
@@ -127,7 +113,8 @@ export default function Category() {
                                                     <td>{Category.name}</td>
                                                   
                                                     <td>
-                                                        <button className="btn btn-info"  onClick ={ e => {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
+                                                        <button className="btn btn-info"  onClick ={ e => {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button
+                                                         className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
                                                     </td>
                                                 </tr>
                                             ))}

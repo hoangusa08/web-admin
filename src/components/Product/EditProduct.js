@@ -35,7 +35,7 @@ export default function EditProduct() {
         }
     )
     useEffect(() => {
-        // async function getdata (){
+        async function getdata (){
             check.checklogin();
             API.get('product/getOneToUpdate/' + array[array.length-1], token).then((response)=> {
                 let temp = response.data
@@ -75,8 +75,8 @@ export default function EditProduct() {
             }).catch((error) =>{
     
             });
-        // }
-        // getdata()
+        }
+        getdata()
     }, []);
     useEffect(() => {
         async function getdatas (){
@@ -123,9 +123,6 @@ export default function EditProduct() {
                 console.log(error.response)
             });
     }
-    function clog (){
-        console.log(dataoutput);
-    }
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -135,22 +132,8 @@ export default function EditProduct() {
         ) : (
         <div className="page-wrapper">
         <div className="page-breadcrumb">
-            <div className="row">
-                <div className="col-5 align-self-center">
-                    <h4 className="page-title">Edit Product</h4>
-                </div>
-                <div className="col-7 align-self-center">
-                    <div className="d-flex align-items-center justify-content-end">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li className="breadcrumb-item active" aria-current="page">New Product</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
+            <div className="col-5 align-self-center">
+                <h4 className="page-title">Edit Product</h4>
             </div>
         </div>
         <div className="container-fluid">
@@ -159,17 +142,17 @@ export default function EditProduct() {
                     <div className="card card-body">
                         <form className="form-horizontal m-t-30">
                             <div className="form-group">
-                                <label for="name">Name</label>
+                                <label htmlFor="name">Name</label>
                                 <input type="text" className="form-control" value={dataoutput.name} id="name"
                                  onChange={e => setdataoutput({...dataoutput ,name : e.target.value})}/>
                             </div>
                             <div className="form-group">
-                                <label  for="price">Price</label>
+                                <label  htmlFor="price">Price</label>
                                 <input type="text" className="form-control" value={dataoutput.price} id="price"
                                  onChange={e => setdataoutput({...dataoutput ,price : e.target.value})}/>
                             </div>
                             <div className="form-group">
-                                <label for="des">Description</label>
+                                <label htmlFor="des">Description</label>
                                 <CKEditor
                                     
                                     editor={ ClassicEditor }
@@ -185,7 +168,7 @@ export default function EditProduct() {
                             </div>
                             <div className="form-group">
                                 <div className="row">
-                                    <label className="idlabel" for="brand">Brand</label>
+                                    <label className="idlabel" htmlFor="brand">Brand</label>
                                     <input list="brand" className="col-md-3" value={dataoutput.id_brand} 
                                         onChange={ e => {
                                             setdataoutput({...dataoutput ,id_brand : e.target.value })
@@ -193,10 +176,10 @@ export default function EditProduct() {
                                         }}></input>
                                     <datalist id="brand">
                                         {listBrand.map((brand) => (
-                                           <option value={brand.id} >{brand.name}</option>
+                                           <option value={brand.id} key={brand.id}>{brand.name}</option>
                                         ))}
                                     </datalist>
-                                    <label className="idlabel" for="category">Category</label>
+                                    <label className="idlabel" htmlFor="category">Category</label>
                                     <input list="cate" className="col-md-3" value={dataoutput.id_cate}
                                         onChange={e => {
                                             setdataoutput({...dataoutput ,id_cate : e.target.value })
@@ -204,43 +187,43 @@ export default function EditProduct() {
                                             }}></input>
                                     <datalist id="cate">
                                         {listCategory.map((category) => (
-                                           <option value={category.id}>{category.name}</option>
+                                           <option value={category.id} key={category.id}>{category.name}</option>
                                         ))}
                                     </datalist>
-                                    <label className="idlabel" for="image">Image</label>
+                                    <label className="idlabel" htmlFor="image">Image</label>
                                     <input list="image" className="col-md-3" value = {dataoutput.id_image}
                                         onChange={e => {setdataoutput({...dataoutput ,id_image : e.target.value })
                                         setsearch({...search , bool : true , name : "image" , string : e.target.value})
                                         }}></input>
                                     <datalist id="image">
                                         {listImage.map((ima) => (
-                                           <option value={ima.id}>{ima.name}</option>
+                                           <option value={ima.id} key={ima.id}>{ima.name}</option>
                                         ))}
                                     </datalist>
                                 </div>
                             </div>
                             <div className="form-group">
                                 <div className="row">
-                                    <label className="idlabel" for="size">Size  :</label>
+                                    <label className="idlabel" htmlFor="size">Size  :</label>
                                     <input list="size" className="col-md-3" value={dataoutput.name_size}
                                     onChange={e => setdataoutput({...dataoutput ,name_size : e.target.value })}></input>
                                     <datalist id="size">
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
-                                        <option value="XL">XL</option>
-                                        <option value="XXL">XXL</option>
+                                        <option value="M" key="M">M</option>
+                                        <option value="L" key="L">L</option>
+                                        <option value="XL" key="XL">XL</option>
+                                        <option value="XXL" key="XXL">XXL</option>
                                     </datalist>
-                                    <label className="idlabel" for="Color">Color</label>
+                                    <label className="idlabel" htmlFor="Color">Color</label>
                                     <input list="color" className="col-md-3" value={dataoutput.id_color}
                                     onChange={e => {setdataoutput({...dataoutput ,id_color : e.target.value })
                                                     setsearch({...search , bool : true , name : "color" , string : e.target.value}) 
                                             }}></input>
                                     <datalist id="color">
                                         {listColor.map((color) => (
-                                           <option value={color.id}>{color.name}</option>
+                                           <option value={color.id} key={color.id}>{color.name}</option>
                                         ))}
                                     </datalist>
-                                    <label  className="idlabel" for="number">Number</label>
+                                    <label  className="idlabel" htmlFor="number">Number</label>
                                     <input type="text" className="col-md-3"  value={dataoutput.number} id="number"
                                     onChange={e => setdataoutput({...dataoutput ,number : e.target.value})}/>
                                 </div>
@@ -249,15 +232,14 @@ export default function EditProduct() {
                             <div className="form-group">
                                 <label>Gender</label><br></br>
                                 <input type="radio" id="male" value="Male" name="gender"
-                                onChange={e => setdataoutput({...dataoutput ,id_gender : 1})}/><label for="male" className="idlabel" >Male</label>
+                                onChange={e => setdataoutput({...dataoutput ,id_gender : 1})}/><label htmlFor="male" className="idlabel" >Male</label>
                                 <input type="radio" id="female" value="Female" name="gender"
-                                onChange={e => setdataoutput({...dataoutput ,id_gender : 2})}/><label for="female"className="idlabel" >Female</label>
+                                onChange={e => setdataoutput({...dataoutput ,id_gender : 2})}/><label htmlFor="female"className="idlabel" >Female</label>
                                 <input type="radio" id="couple" value="Couple" name="gender"
-                                onChange={e => setdataoutput({...dataoutput ,id_gender : 3})}/><label for="couple"className="idlabel" >Couple</label><br></br>
+                                onChange={e => setdataoutput({...dataoutput ,id_gender : 3})}/><label htmlFor="couple"className="idlabel" >Couple</label><br></br>
                             </div>
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn" onClick={save}>Save </button>
-                                <button type="button" name="example-email" className="btn" onClick={clog}>clog </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={save}>Save </button>
                             </div>
                         </form>
                     </div>

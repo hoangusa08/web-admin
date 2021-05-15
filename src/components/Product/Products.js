@@ -1,6 +1,6 @@
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
-import { Link ,useHistory } from 'react-router-dom';
+import {useHistory } from 'react-router-dom';
 import Pagination from '../Pagination/index'
 import Api from '../Config/Api';
 export default function Products() {
@@ -50,28 +50,14 @@ export default function Products() {
         <>
             {(check.IsLogin === false ) ? (
                 <div className="page-wrapper">
-                    <h3 style={{textAlign : "center"}}>you need login</h3>
+                    <h3 style={{textAlign : "center"}}>You need login</h3>
                 </div>
             ) : (
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
-                    <div className="row">
                         <div className="col-5 align-self-center">
                             <h4 className="page-title">Product</h4>
                         </div>
-                        <div className="col-7 align-self-center">
-                            <div className="d-flex align-items-center justify-content-end">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/">Home</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Product</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div className="container-fluid">
                     <div className="row">
@@ -94,15 +80,15 @@ export default function Products() {
                                         </thead>
                                         <tbody>
                                             {ListProduct.map((product) => (
-                                                <tr>
+                                                <tr key={product.id}>
                                                     <th scope="row">{product.id}</th>
                                                     <td>{product.name}</td>
                                                     <td>{product.number}</td>
                                                     <td>{product.name_Size}</td>
                                                     <td><a href={product.link} target="_blank">click in here</a></td>
-                                                    <td><button className="btn btn-success" onClick ={ e=> {history.push(`/product/${product.id}`)}}>View</button> 
-                                                    <button className="btn btn-info" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>Edit</button>
-                                                    <button className="btn btn-danger" onClick = {deleteproduct.bind(this, product.id)}>Delete</button></td>
+                                                    <td><button className="btn btn-success" onClick ={ e=> {history.push(`/product/${product.id}`)}}>View</button> <button 
+                                                    className="btn btn-info" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>Edit</button> <button 
+                                                    className="btn btn-danger" onClick = {deleteproduct.bind(this, product.id)}>Delete</button></td>
 
                                                 </tr>
                                             ))}
