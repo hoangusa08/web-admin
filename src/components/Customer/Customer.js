@@ -1,10 +1,31 @@
 import React , {useState , useEffect} from 'react'
 import API from '../Config/Api'
+import Pagination from '../Pagination/index'
 import { Link, useHistory } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 export default function Customer() {
+    const location = useLocation();
     const history = useHistory();
     const [ListCustomer , setListCustomer] = useState([]);
     const [runuseEff, setrunuseEff] = useState(1)
+    const [alert, setAlert] = useState({
+        report: ""
+    })
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 5,
+        totalPages: 1
+    })
+
+    useEffect(() => {
+        if(typeof location.state != "undefined")
+            setAlert({...alert, report : location.state.report})
+     }, [location]);
+
+    const [filters, setFilters] = useState({
+        page: 0
+    })
+
     useEffect(() => {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -12,9 +33,20 @@ export default function Customer() {
         API.get('user/customer',token).then((response)=> {
                 setListCustomer(response.data.content);
                 console.log(response.data.content);
+                setPagination({
+                    page: response.data.pageIndex,
+                    totalPages: response.data.totalPage
+                })
             }).catch((error) =>{
             });
-    }, [runuseEff])
+    }, [runuseEff, filters])
+
+    function handlePageChange(newPage) {   
+        setFilters({
+            page: newPage
+        })
+
+    }
 
     function deleteCustomer (id) {
         let token = {
@@ -44,6 +76,14 @@ export default function Customer() {
                                 <div className="card-body">
                                         <h4 className="card-title">List Customer <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-customer")}}>New</button></h4>
                                 </div>
+                                {(alert.report != "") ?
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            {alert.report}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> : <div></div>
+                                }
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
@@ -76,6 +116,10 @@ export default function Customer() {
                             </div>
                         </div>
                     </div>
+                    <Pagination
+                        pagination={pagination}
+                        onPageChange={handlePageChange}
+                    />
                 </div>
             </div>
     )

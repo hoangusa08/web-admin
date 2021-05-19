@@ -48,8 +48,11 @@ export default function EditCustomer(props) {
                 id_role : 3,
             }
             API.patch('user/updateCustomer/' + id, customer , token).then((response)=> {
-                alert(response.data.message);
-                history.push("/customer")
+                // alert(response.data.message);
+                history.push({
+                    pathname: '/customer',
+                    state: { report: 'Edit Customers Succeed ' }
+                }) 
             }).catch((error) =>{
                 alert(error.data.message);
             });

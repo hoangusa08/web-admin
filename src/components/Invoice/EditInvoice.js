@@ -90,7 +90,10 @@ function EditInvoice(props) {
 
         API.patch('/invoice/' + id, data, token).then((response) => {
             console.log(response.data)
-            history.push('/invoice')  
+            history.push({
+                pathname: '/invoice',
+                state: { report: 'Invoice update successful' }
+            }) 
         }).catch((error) => {
 
         });

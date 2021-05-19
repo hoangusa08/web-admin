@@ -21,7 +21,10 @@ export default function AddCategory() {
         Api.post('category', data, token)
         .then(response => {
             console.log(response.data)
-            history.push('/categorys')
+            history.push({
+                pathname: '/categorys',
+                state: { report: 'Add Success Category' }
+            }) 
         })
         .catch(errors => {
             console.log(errors)

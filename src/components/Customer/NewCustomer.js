@@ -27,10 +27,13 @@ export default function NewCustomer() {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
                 API.post("user", user , token).then((response)=> {
-                    alert(response.data.message);
-                    history.push("/customer")
+                    // alert(response.data.message);
+                    history.push({
+                        pathname: '/customer',
+                        state: { report: 'Add Customers Succeed ' }
+                    }) 
                 }).catch((error) =>{
-                    alert(error.response.data.message);
+                    // alert(error.response.data.message);
                 });
             }
         }
@@ -90,7 +93,7 @@ export default function NewCustomer() {
                                     {message && (
                                         <div className="error-mesage"><h3>{message}</h3></div>
                                     )}
-                                <button type="button" name="example-email" className="btn" onClick={register}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={register}>Save </button>
                             </div>
                         </form>
                     </div>

@@ -14,3 +14,12 @@ code {
 .pn{
   margin-left: 50rem;
 }
+
+.synopsis-content {
+  /* margin-top: 10px; */
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

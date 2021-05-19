@@ -4,9 +4,15 @@ import Pagination from '../Pagination/index'
 import queryString from 'query-string'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { useLocation } from "react-router-dom";
 export default function Invoice() {
+    // console.log(state.report)
+    const location = useLocation();
     const check = useContext(LoginContext);
     const history = useHistory()
+    const [alert, setAlert] = useState({
+        report: ""
+    })
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -21,6 +27,11 @@ export default function Invoice() {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
+
+    useEffect(() => {
+        if(typeof location.state != "undefined")
+            setAlert({...alert, report : location.state.report})
+     }, [location]);
 
     useEffect(() => {
         async function getData () {
@@ -65,7 +76,7 @@ export default function Invoice() {
         API.delete('invoice/' + id, token)
         .then(response => {       
             console.log(response.data)
-            alert("Xóa review thành công")
+            // alert("Xóa review thành công")
         })
         .catch(errors => {
               console.log(errors)
@@ -89,6 +100,15 @@ export default function Invoice() {
                                 <div className="card-body">
                                     <h4 className="card-title">List Invoice <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-invoice")}}>New</button></h4>
                                 </div>
+                                {(alert.report != "") ?
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            {alert.report}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> : <div></div>
+                                }
+                                                             
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>

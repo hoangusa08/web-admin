@@ -32,7 +32,10 @@ function EditCategory(props) {
 
         API.patch('category/' + id, data, token).then((response) => {
             console.log(response.data)
-            history.push('/categorys')  
+            history.push({
+                pathname: '/categorys',
+                state: { report: 'Edit Success Category' }
+            }) 
             
         }).catch((error) => {
 

@@ -10,12 +10,47 @@ function AddPost(props) {
         content: "",
         id_image: null
     });
+
     const history=useHistory();
     const check = useContext(LoginContext);
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
-
+    const [listImage, setlistImage] = useState([]);
+    const [search, setsearch] = useState(
+        {
+            bool : false , 
+            name : "brand",
+            string : ""
+        }
+    )
+    useEffect(() => {
+        async function getdata (){
+            check.checklogin();
+            API.get('image', token).then((response)=> {
+                setlistImage(response.data.content);
+            }).catch((error) =>{
+    
+            });
+        }
+        getdata()
+    }, []);
+    useEffect(() => {
+        async function getdatas (){
+            switch (search.name) {
+                case "image":
+                    API.get('image?search='+search.string, token).then((response)=> {
+                        setlistImage(response.data.content);
+                    }).catch((error) =>{
+            
+                    }); 
+                    break;
+                default:
+                    break;
+            }
+        }
+        if(search.bool === true){ getdatas()}
+    }, [search]);
     const onChange = (e) => {  
         e.persist();  
         setPost({...post, [e.target.name]: e.target.value});  
@@ -24,14 +59,17 @@ function AddPost(props) {
     const addPost =  (e) =>{
         const data = {
             content: post.content,
-            id_image: 1,
+            id_image: post.id_image,
             title: post.title
         }
 
         API.post('post', data, token)
         .then(response => {
             console.log(response.data)
-            history.push('/posts')
+            history.push({
+                pathname: '/posts',
+                state: { report: 'Add Success Post' }
+            }) 
         })
         .catch(errors => {
             console.log(errors)
@@ -67,6 +105,19 @@ function AddPost(props) {
                                  />
                             </div>
                             <div className="form-group">
+                                    <label  htmlFor="image">Image</label>
+                                    <input list="image" className="form-control"  type="text"
+                                        onChange={e => {setPost({...post ,id_image : e.target.value })
+                                        setsearch({...search , bool : true , name : "image" , string : e.target.value})
+                                        }}></input>
+                                    <datalist id="image">
+                                        {listImage.map((ima) => (
+                                           <option value={ima.id} key={ima.id}>{ima.name}</option>
+                                        ))}
+                                </datalist>
+                            </div>
+
+                            <div className="form-group">
                                 <label for="des">Description</label>
                                 <CKEditor
                                     editor = { ClassicEditor }
@@ -81,6 +132,7 @@ function AddPost(props) {
                                     } }
                                 />
                             </div>
+
                             <div className="form-group">
                                 <button type="button" name="example-email" className="btn btn-info" onClick= {addPost}>Save </button>
                             </div>

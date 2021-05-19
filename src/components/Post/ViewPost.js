@@ -4,7 +4,7 @@ import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import {useHistory} from 'react-router-dom'
 import API from '../Config/Api';
-export default function EditPost(props) {
+export default function ViewPost(props) {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
@@ -14,14 +14,6 @@ export default function EditPost(props) {
         content : "",
         id_image : 0
     });
-    const [listImage, setlistImage] = useState([]);
-    const [search, setsearch] = useState(
-        {
-            bool : false , 
-            name : "brand",
-            string : ""
-        }
-    )
     const check = useContext(LoginContext);
     const idPost = props.match.params.id
     useEffect(() => {
@@ -45,53 +37,12 @@ export default function EditPost(props) {
 
     }, []);
 
-    useEffect(() => {
-        async function getdata (){
-            check.checklogin();
-            API.get('image', token).then((response)=> {
-                setlistImage(response.data.content);
-            }).catch((error) =>{
-    
-            });
-        }
-        getdata()
-    }, []);
-    useEffect(() => {
-        async function getdatas (){
-            switch (search.name) {
-                case "image":
-                    API.get('image?search='+search.string, token).then((response)=> {
-                        setlistImage(response.data.content);
-                    }).catch((error) =>{
-            
-                    }); 
-                    break;
-                default:
-                    break;
-            }
-        }
-        if(search.bool === true){ getdatas()}
-    }, [search]);
-    const editPost =  (e) =>{
+    const back =  (e) =>{
         e.preventDefault();  
-        console.log(post)
-        const dataPost = {
-            content: post.content,
-            id_image: post.id_image,
-            title: post.title
-        }
-        console.log(dataPost)
-        
-        API.patch('post/' + idPost, dataPost, token).then((response) => {
-            console.log(response.data)
-            history.push({
-                pathname: '/posts',
-                state: { report: 'Edit Success Post' }
-            }) 
-        }).catch((error) => {
-
-        });
-        // console.log(category);
+        history.push({
+            pathname: '/posts',
+            
+        }) 
     }
 
     return (
@@ -117,19 +68,7 @@ export default function EditPost(props) {
                             <div className="form-group">
                                 <label htmlFor="title">Title</label>
                                 <input type="text" className="form-control" value={post.title} id="title" name="title"
-                                    onChange={e => setPost({...post ,title : e.target.value})}/>
-                            </div>
-                            <div className="form-group">
-                                    <label  htmlFor="image">Image</label>
-                                    <input list="image" className="form-control"  type="text" value={post.id_image} 
-                                        onChange={e => {setPost({...post ,id_image : e.target.value })
-                                        setsearch({...search , bool : true , name : "image" , string : e.target.value})
-                                        }}></input>
-                                    <datalist id="image">
-                                        {listImage.map((ima) => (
-                                           <option value={ima.id} key={ima.id}>{ima.name}</option>
-                                        ))}
-                                </datalist>
+                                    onChange={e => setPost({...post ,title : e.target.value})} readOnly/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="content">Content</label>
@@ -148,7 +87,7 @@ export default function EditPost(props) {
                             </div>
   
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn btn-info" onClick={editPost}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={back}>Back </button>
                                
                             </div>
                         </form>

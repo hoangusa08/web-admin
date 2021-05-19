@@ -4,9 +4,13 @@ import { Link, useHistory } from 'react-router-dom'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
 import { LoginContext } from '../Context/LoginContext'
+import { useLocation } from "react-router-dom";
 export default function Category() {
+    const location = useLocation();
     const check = useContext(LoginContext);
-
+    const [alert, setAlert] = useState({
+        report: ""
+    })
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -19,20 +23,12 @@ export default function Category() {
     })
     const history = useHistory()
     const [ListCategory , setListCategory] = useState([]);
+    useEffect(() => {
+        if(typeof location.state != "undefined")
+            setAlert({...alert, report : location.state.report})
+     }, [location]);
 
     useEffect(() => {
-        // const paramsString = queryString.stringify(filters)
-        // const requestUrl = `category?${paramsString}`
-        // API.get(requestUrl).then((response)=> {
-        //         console.log(response.data)
-        //         setListCategory(response.data.content);
-        //         setPagination({
-        //             page: response.data.pageIndex,
-        //             totalPages: response.data.totalPage
-        //         })
-        //     }).catch((error) =>{
-        //         });
-
         async function getData () {
             let token = {
                 headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -58,8 +54,6 @@ export default function Category() {
         setFilters({
             page: newPage
         })
-        // console.log(filters)
-        // console.log('New page: ', newPage)
     }
 
     const deleteCategory = (e) => {
@@ -73,9 +67,6 @@ export default function Category() {
         .then(response => {
             setFilters({...filters, category_edit_id: id})
             console.log(response.data)
-            // alert("Xóa category thành công")
-            // window.localStorage.removeItem("cart")
-            // history.push('/home') 
         })
         .catch(errors => {
               console.log(errors)
@@ -96,6 +87,14 @@ export default function Category() {
                                 <div className="card-body">
                                         <h4 className="card-title">List Category <button className="btn1 btn btn-success" onClick ={e => {history.push("/addcategory")}} >New</button></h4>
                                 </div>
+                                {(alert.report != "") ?
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            {alert.report}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> : <div></div>
+                                }
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
