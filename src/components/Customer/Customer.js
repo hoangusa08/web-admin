@@ -1,35 +1,31 @@
 import React , {useState , useEffect} from 'react'
 import API from '../Config/Api'
 import Pagination from '../Pagination/index'
-import { Link, useHistory } from 'react-router-dom';
-import { useLocation } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { success } from '../Helper/Notification';
 export default function Customer() {
-    const location = useLocation();
+    const [searchValue, setsearchValue] = useState("")
     const history = useHistory();
     const [ListCustomer , setListCustomer] = useState([]);
     const [runuseEff, setrunuseEff] = useState(1)
-    const [alert, setAlert] = useState({
-        report: ""
-    })
+
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
         totalPages: 1
     })
+    let token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
 
-    useEffect(() => {
-        if(typeof location.state != "undefined")
-            setAlert({...alert, report : location.state.report})
-     }, [location]);
 
     const [filters, setFilters] = useState({
-        page: 0
+        page: 0,
+        customer_delete_id: 0
     })
 
     useEffect(() => {
-        let token = {
-            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-        }
+
         API.get('user/customer',token).then((response)=> {
                 setListCustomer(response.data.content);
                 console.log(response.data.content);
@@ -53,11 +49,27 @@ export default function Customer() {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
         API.delete(`user/${id}`,token).then((response)=> {
-            alert(response.data.message)
-            setrunuseEff(id)
+            // alert(response.data.message)
+            // setrunuseEff(id)
+            setFilters({...filters, category_delete_id: id})
+            success('Deleted Customer');
         }).catch((error) =>{
-            alert(error.data)
+            // alert(error.data)
         });
+    }
+
+    function search (){
+        if (searchValue !== "")
+        API.get('user/customer?search='+searchValue, token).then((response)=> {
+            // console.log(response.data)
+            setListCustomer(response.data.content);
+            setPagination({
+                page: response.data.pageIndex,
+                totalPages: response.data.totalPage
+            })
+        }).catch((error) =>{
+        }); 
+        
     }
     return (
             <div className="page-wrapper">
@@ -74,16 +86,11 @@ export default function Customer() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Customer <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-customer")}}>New</button></h4>
+                                    <h4 className="card-title">List Customer <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-customer")}}>New</button></h4>
+                                    <input className="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
+                                        value={searchValue}></input>
+                                    <button className="btn-search " onClick={search}><i className="fa fa-search"></i></button>
                                 </div>
-                                {(alert.report != "") ?
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            {alert.report}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div> : <div></div>
-                                }
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>

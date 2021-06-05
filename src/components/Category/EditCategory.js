@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 function EditCategory(props) {
     const check = useContext(LoginContext);
     const [category, setCategory] = useState({
@@ -22,7 +23,6 @@ function EditCategory(props) {
         });
     }, []);
 
-    // console.log(category);
 
     const editCaegory =  (e) =>{
         e.preventDefault();  
@@ -33,9 +33,9 @@ function EditCategory(props) {
         API.patch('category/' + id, data, token).then((response) => {
             console.log(response.data)
             history.push({
-                pathname: '/categorys',
-                state: { report: 'Edit Success Category' }
+                pathname: '/categorys', 
             }) 
+            success('Edit Success Category');
             
         }).catch((error) => {
 

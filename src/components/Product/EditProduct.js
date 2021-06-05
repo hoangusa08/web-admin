@@ -4,6 +4,7 @@ import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import {useHistory} from 'react-router-dom'
 import API from '../Config/Api';
+import { success } from '../Helper/Notification';
 export default function EditProduct() {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -117,8 +118,10 @@ export default function EditProduct() {
     }, [search]);
     function save () {
         API.patch('product/'+array[array.length-1], dataoutput,token).then((response)=> {
-            alert(response.data.message);
-                history.push('/products')
+            history.push({
+                pathname: '/products', 
+            }) 
+            success('Edit Success Category');
             }).catch((error) =>{
                 console.log(error.response)
             });

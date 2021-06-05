@@ -1,7 +1,7 @@
 import API from '../Config/Api'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router';
-
+import { success } from '../Helper/Notification';
 export default function NewCustomer() {
     const history=useHistory();
     const [user , setuser] = useState({
@@ -30,8 +30,8 @@ export default function NewCustomer() {
                     // alert(response.data.message);
                     history.push({
                         pathname: '/customer',
-                        state: { report: 'Add Customers Succeed ' }
                     }) 
+                    success('Successfully added customer');
                 }).catch((error) =>{
                     // alert(error.response.data.message);
                 });

@@ -3,6 +3,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import API from '../Config/Api';
+import { success } from '../Helper/Notification';
 export default function NewProduct() {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -97,7 +98,7 @@ export default function NewProduct() {
     function save () {
         console.log(dataoutput);
         API.post('product', dataoutput,token).then((response)=> {
-            alert(response.data.message);
+            success('Successfully added catogory');
             window.location.reload()
         }).catch((error) =>{
             console.log(error.response)

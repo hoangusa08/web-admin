@@ -20,7 +20,7 @@ export default function ViewPost(props) {
             check.checklogin();
           
             API.get('post/' + idPost, token).then((response)=> {
-                let temp = response.data
+                let temp = response.data[0]
                 // console.log(response.data)
                 setPost({...post,
                     title: temp.title,

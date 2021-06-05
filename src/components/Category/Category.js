@@ -5,8 +5,9 @@ import Pagination from '../Pagination/index'
 import queryString from 'query-string'
 import { LoginContext } from '../Context/LoginContext'
 import { useLocation } from "react-router-dom";
+import { success } from '../Helper/Notification';
 export default function Category() {
-    const location = useLocation();
+    const [searchValue, setsearchValue] = useState("")
     const check = useContext(LoginContext);
     const [alert, setAlert] = useState({
         report: ""
@@ -23,11 +24,10 @@ export default function Category() {
     })
     const history = useHistory()
     const [ListCategory , setListCategory] = useState([]);
-    useEffect(() => {
-        if(typeof location.state != "undefined")
-            setAlert({...alert, report : location.state.report})
-     }, [location]);
 
+    let token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
     useEffect(() => {
         async function getData () {
             let token = {
@@ -42,7 +42,7 @@ export default function Category() {
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
-                console.log(response.data);
+                // console.log(response.data);
             }).catch((error) =>{
             });
         }
@@ -60,17 +60,30 @@ export default function Category() {
         e.preventDefault()
         let id = e.target.id.toString()
         // console.log(id)
-        let token = {
-            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-        }
+
         API.delete('category/' + id,token)
         .then(response => {
             setFilters({...filters, category_edit_id: id})
-            console.log(response.data)
+            // console.log(response.data)
+            success('Deleted category');
         })
         .catch(errors => {
               console.log(errors)
         })
+    }
+
+    function search (){
+        if (searchValue !== "")
+        API.get('category?search='+searchValue, token).then((response)=> {
+            // console.log(response.data)
+            setListCategory(response.data.content);
+            setPagination({
+                page: response.data.pageIndex,
+                totalPages: response.data.totalPage
+            })
+        }).catch((error) =>{
+        }); 
+        
     }
 
     return (
@@ -86,15 +99,10 @@ export default function Category() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Category <button className="btn1 btn btn-success" onClick ={e => {history.push("/addcategory")}} >New</button></h4>
+                                        <input className="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
+                                        value={searchValue}></input>
+                                        <button className="btn-search " onClick={search}><i className="fa fa-search"></i></button>
                                 </div>
-                                {(alert.report != "") ?
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            {alert.report}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div> : <div></div>
-                                }
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>

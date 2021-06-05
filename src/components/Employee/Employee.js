@@ -2,15 +2,18 @@ import React , {useState , useEffect, useContext} from 'react'
 import Api from '../Config/Api'
 import {useHistory } from 'react-router-dom';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
+
 export default function Employee() {
     const history = useHistory();
     const check = useContext(LoginContext);
     const [ListEmployee , setListEmployee] = useState([]);
+    const [searchValue, setsearchValue] = useState("")
     const [runuseEff, setrunuseEff] = useState(1)
+    let token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
     useEffect(() => {
-        let token = {
-            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-        }
         Api.get('admin/user/employee',token).then((response)=> {
                 setListEmployee(response.data.content);
                 console.log(response.data.content);
@@ -18,15 +21,21 @@ export default function Employee() {
             });
     }, [runuseEff])
     function deleteEmployee (id) {
-        let token = {
-            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-        }
         Api.delete(`admin/user/${id}`,token).then((response)=> {
-            alert(response.data.message)
             setrunuseEff(id)
+            success('Deleted category');
         }).catch((error) =>{
             alert(error.data)
         });
+    }
+    function search (){
+        if (searchValue !== "")
+        Api.get('admin/user/employee?search='+searchValue, token).then((response)=> {
+            console.log(response.data)
+            setListEmployee(response.data.content);
+        }).catch((error) =>{
+        }); 
+        
     }
     return (
         <>
@@ -46,7 +55,11 @@ export default function Employee() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Employee <button className="btn1 btn btn-success" onClick ={e => {history.push("/newemployee")}}>new</button></h4>
+                                        <h4 className="card-title">List Employee </h4>
+                                        <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
+                                        value={searchValue}  className="input-search"></input>
+                                        <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
+                                        <button className="btn1 btn btn-success" onClick ={e => {history.push("/newemployee")}}>new</button>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

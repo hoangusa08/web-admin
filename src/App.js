@@ -20,14 +20,12 @@ import Review from './components/Reviews/Review'
 import Invoice from './components/Invoice/Invoice'
 import ViewInvoice from './components/Invoice/ViewInvoice'
 
-// import Customer from './components/Public/Customer'
 import Login from './components/Login/Login'
 import Employee from './components/Employee/Employee'
 import Sale from './components/Sale/Sale'
 import NewBrand from './components/Brand/NewBrand';
 import ProductDetail from './components/Product/ProductDetail';
 import AddCategory from './components/Category/AddCategory'
-// import NewCustomer from './components/New/NewCustomer';
 
 import EditAccount from './components/Account/EditAccount';
 
@@ -51,13 +49,17 @@ import NewCustomer from './components/Customer/NewCustomer'
 import EditCustomer from './components/Customer/EditCustomer';
 import NewInvoice from './components/Invoice/NewInvoice';
 import ViewPost from './components/Post/ViewPost';
+
+import { Alert } from './components/Helper/Notification';
 function App() {
   return (
     <Router>
       <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full" data-boxed-layout="full">
           <LoginContextProvider>
             <Home/>
+            <Alert stack={ { limit: 3 } } />
             <Switch>
+
                 <Route exact path='/' 
                 component={localStorage.getItem("roleNames") === "admin" ? Sale : localStorage.getItem("roleNames") === "employee" ? Products : Login }></Route>
                 <Route exact path='/login' > <Login/>  </Route>
@@ -113,7 +115,8 @@ function App() {
                 <Route path='/role' component={Role}/>
 
                 <Route path='/userofrole/:id' component={ListUserOfRole}/>
-              
+
+                
             </Switch>
           </LoginContextProvider>
       </div>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import {useHistory} from 'react-router-dom'
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 export default function EditBrand() {
         const check = useContext(LoginContext);
         const [message , setmessage] = useState("");
@@ -29,8 +30,10 @@ export default function EditBrand() {
                 setmessage("You have not entered enough");
             }else {
                     Api.patch(`brand/${id[id.length-1]}`, newvalue , token).then((response)=> {
-                        alert(response.data.message);
-                        history.push('/brands')
+                        history.push({
+                            pathname: '/brands', 
+                        }) 
+                        success('Edit Success Category');
                     }).catch((error) =>{
                         alert(error.response.data.message);
                         console.log(error.response)

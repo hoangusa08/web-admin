@@ -2,6 +2,7 @@ import Api from '../Config/Api';
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 
 export default function NewEmployee() {
     const history=useHistory();
@@ -30,7 +31,7 @@ export default function NewEmployee() {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
                 Api.post("admin/user",user ,token).then((response)=> {
-                    alert(response.data.message);
+                    success('Successfully added catogory');
                     history.push("/employee")
                 }).catch((error) =>{
                     alert(error.response.data.message);

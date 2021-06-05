@@ -19,6 +19,7 @@
     "react-js-pagination": "^3.0.3",
     "react-pagify": "^2.4.0",
     "react-router-dom": "^5.2.0",
+    "react-s-alert": "^1.4.1",
     "react-scripts": "4.0.3",
     "react-select-2": "^2.0.11",
     "web-vitals": "^1.1.1"
@@ -46,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "style-loader": "^2.0.0"
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Api from '../Config/Api'
 import { Link, useHistory } from 'react-router-dom'
-
+import { success } from '../Helper/Notification';
 
 export default function AddCategory() {
 
@@ -23,8 +23,8 @@ export default function AddCategory() {
             console.log(response.data)
             history.push({
                 pathname: '/categorys',
-                state: { report: 'Add Success Category' }
             }) 
+            success('Successfully added catogory');
         })
         .catch(errors => {
             console.log(errors)

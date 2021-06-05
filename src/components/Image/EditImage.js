@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 
 export default function NewImage() {
     const [message , setmessage] = useState("");
@@ -33,8 +34,10 @@ export default function NewImage() {
             setmessage("You have not entered enough");
         }else {
             Api.patch('image/'+idImage[idImage.length-1],newvalue,token).then((response)=> {
-                alert(response.data.message);
-                history.push('/image')
+                history.push({
+                    pathname: '/image', 
+                }) 
+                success('Edit Success Category');
             }).catch((error) =>{
                 alert(error.message);
             });

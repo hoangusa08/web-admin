@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 
 export default function NewColor() {
     const [message , setmessage] = useState("");
@@ -30,8 +31,10 @@ export default function NewColor() {
             setmessage("You have not entered enough");
         }else {
             Api.patch('color/'+idColor[idColor.length-1], newvalue,token).then((response)=> {
-                alert(response.data.message);
-                history.push('/color')
+                history.push({
+                    pathname: '/color', 
+                }) 
+                success('Edit Success Category');
                 }).catch((error) =>{
                     console.log(error)
                 });

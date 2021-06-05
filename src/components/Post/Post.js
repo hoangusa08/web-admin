@@ -5,22 +5,7 @@ import { Link , useHistory } from 'react-router-dom'
 import queryString from 'query-string'
 import {LoginContext} from '../Context/LoginContext'
 import { useLocation } from "react-router-dom";
-const tableStyle = {
-    // border: 1px solid black,
-    // table-layout: fixed,
-    // width: '200px',
-}
-
-const thStyle = {
-  width: '300px',
-  overflow: 'hidden'
-}
-
-const titleStyle = {
-    width: '200px',
-    overflow: 'hidden'
-}
-
+import { success } from '../Helper/Notification';
 function Post() {
     const location = useLocation();
     const history = useHistory();
@@ -45,21 +30,6 @@ function Post() {
     }
 
     useEffect(() => {
-        if(typeof location.state != "undefined")
-            setAlert({...alert, report : location.state.report})
-     }, [location]);
-
-    useEffect(() => {
-        // const paramsString = queryString.stringify(filters)
-        // const requestUrl = `post?${paramsString}`
-        // API.get(requestUrl).then((response)=> {
-        //         setListPost(response.data.content);
-        //         setPagination({
-        //             page: response.data.pageIndex,
-        //             totalPages: response.data.totalPage
-        //         })
-        //     }).catch((error) =>{
-        //     });
 
         async function getData () {
             let token = {
@@ -81,13 +51,10 @@ function Post() {
         getData();     
     }, [filters])
 
-    function handlePageChange(newPage) {
-       
+    function handlePageChange(newPage) {      
         setFilters({
             page: newPage
         })
-        console.log(filters)
-        console.log('New page: ', newPage)
     }
 
     const deletePost = (e) => {
@@ -95,13 +62,11 @@ function Post() {
         let id = e.target.id.toString()
         // console.log(id)
    
-        API.delete('post/' + id)
+        API.delete('post/' + id, token)
         .then(response => {
             setFilters({...filters, post_edit_id: id})
             console.log(response.data)
-            // alert("Xóa category thành công")
-            // window.localStorage.removeItem("cart")
-            // history.push('/home') 
+            success('Deleted post');
         })
         .catch(errors => {
               console.log(errors)
@@ -122,7 +87,7 @@ function Post() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Post <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/add-post")}} >New</button></h4>
+                                    <h4 className="card-title">List Post <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/add-post")}} >New</button></h4>
                                 </div>
                                 {(alert.report != "") ?
                                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -176,3 +141,19 @@ function Post() {
 }
 
 export default Post
+
+const tableStyle = {
+    // border: 1px solid black,
+    // table-layout: fixed,
+    // width: '200px',
+}
+
+const thStyle = {
+  width: '300px',
+  overflow: 'hidden'
+}
+
+const titleStyle = {
+    width: '200px',
+    overflow: 'hidden'
+}

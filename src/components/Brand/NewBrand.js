@@ -1,6 +1,7 @@
 import Api from '../Config/Api';
 import React, { useContext, useState } from 'react'
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 
 export default function NewBrand() {
     const [message , setmessage] = useState("");
@@ -18,7 +19,7 @@ export default function NewBrand() {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
                 }).then((response)=> {
-                alert(response.data.message);
+                success('Successfully added catogory');
             }).catch((error) =>{
                 alert(error.response.data.message);
                 console.log(error.response.data)

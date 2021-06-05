@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 function NewInvoice(props) {
     const history = useHistory();
     const id = props.match.params.id
@@ -146,8 +147,9 @@ function NewInvoice(props) {
             // window.localStorage.removeItem("cart")
             history.push({
                 pathname: '/invoice',
-                state: { report: 'Đặt hàng thành công' }
+                
             })
+            success('Successfully added invoice');
     
         })
         .catch(errors => {

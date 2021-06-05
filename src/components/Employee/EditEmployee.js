@@ -2,6 +2,7 @@ import Api from '../Config/Api';
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 export default function EditEmployee() {
     const history=useHistory();
     const check = useContext(LoginContext);
@@ -46,8 +47,10 @@ export default function EditEmployee() {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
                 Api.patch(`admin/user/${array[array.length -1]}`, user , token).then((response)=> {
-                    alert(response.data.message);
-                    history.push("/employee")
+                    history.push({
+                        pathname: '/employee', 
+                    }) 
+                    success('Edit Success Category');
                 }).catch((error) =>{
                     alert(error.data.message);
                 });

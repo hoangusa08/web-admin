@@ -21,11 +21,11 @@ export default function Login() {
                     setErrorMessage("")
                     LoginDispatch();
                 }else{
-                    setErrorMessage("acount don't corect")
+                    setErrorMessage("acount is not exist")
                 }
                 
             }).catch((error) =>{
-                setErrorMessage( "username or password don't correct" );
+                setErrorMessage( "username or password is not correct" );
             });
         }
        

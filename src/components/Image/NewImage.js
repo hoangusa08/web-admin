@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 
 export default function NewImage() {
     const [message , setmessage] = useState("");
@@ -19,7 +20,7 @@ export default function NewImage() {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
                 }).then((response)=> {
-                alert(response.data.message);
+                    success('Successfully added catogory');
             }).catch((error) =>{
                 alert(error.message);
                 console.log(error)

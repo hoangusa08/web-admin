@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 function EditInvoice(props) {
     const check = useContext(LoginContext);
     const [invoice, setInvoice] = useState({
-        fullName_Employee : "",
+        name_Customer : "",
         listProduct: [],
         is_paid: false,
         totalMoney: 0
@@ -32,7 +33,7 @@ function EditInvoice(props) {
 
     useEffect(() => {
         check.checklogin();
-        API.get('/invoice/ByEmployee/all', token).then((response)=> {
+        API.get('/invoice/ByCustomer/all', token).then((response)=> {
             console.log(response.data)
             let listInvoice = response.data
             //table sau khi xu ly
@@ -62,7 +63,7 @@ function EditInvoice(props) {
             //invoice
             let dataInvoice = {
                 id: listInvoiceHandled[0].id,
-                fullName_Employee : listInvoiceHandled[0].fullName_Employee,
+                name_Customer : listInvoiceHandled[0].name_Customer,
                 listProduct: listProductOfInvoice,
                 is_paid: listInvoiceHandled[0].is_paid ,
                 totalMoney: totalMoney
@@ -92,8 +93,10 @@ function EditInvoice(props) {
             console.log(response.data)
             history.push({
                 pathname: '/invoice',
-                state: { report: 'Invoice update successful' }
+                
             }) 
+            success('Invoice status has been updated successfully');
+            
         }).catch((error) => {
 
         });
@@ -117,8 +120,8 @@ function EditInvoice(props) {
                         <h4 className="card-title">Edit Invoice</h4>
                         <form className="form-horizontal m-t-30" >
                             <div className="form-group" >
-                                <label>Full Name Employee</label>
-                                <input type="text" className="form-control" value={invoice.fullName_Employee} readOnly/>
+                                <label>Full Name Customer</label>
+                                <input type="text" className="form-control" value={invoice.name_Customer} readOnly/>
                                     
                             </div>
                             <div className="form-group" >

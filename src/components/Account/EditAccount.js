@@ -1,6 +1,8 @@
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import API from '../Config/Api';
+import { success } from '../Helper/Notification';
+import { useHistory } from 'react-router';
 export default function EditAccount() {
     const check = useContext(LoginContext);
     const [userUpdate , setuserUpdate] = useState({
@@ -12,6 +14,9 @@ export default function EditAccount() {
         phoneNumber: "",
         id_role : 2
     });
+    const history=useHistory();
+    const [retypePass, setretypePass] = useState("")
+    const [mess, setmess] = useState("")
     var token ={headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} }
     useEffect(() => {
             async function getdata() {        
@@ -32,11 +37,21 @@ export default function EditAccount() {
             getdata()
     }, [])
     function save() {
-        API.patch(`user/${localStorage.id}`, userUpdate , token).then((response)=> {
-            alert(response.data.message);
-        }).catch((error) =>{
-            console.log(error.response.data);
-        });      
+        if( userUpdate.password !== "" && retypePass !== ""){
+            if(userUpdate.password === retypePass) {
+                API.patch(`user/${localStorage.id}`, userUpdate , token).then((response)=> {
+                    success('Edit Success Category');
+                    history.push("/myaccount");
+                }).catch((error) =>{
+                    console.log(error.response.data);
+                });    
+            } else {
+                setmess("Retype password is not correct")
+            }
+        } else {
+            setmess("You need to enter your password")
+        }
+        
     }
     return (
         <>
@@ -85,9 +100,17 @@ export default function EditAccount() {
                             onChange={e => setuserUpdate({...userUpdate ,password : e.target.value})} value={userUpdate.password}></input>
                         </div>
                         <div className="col-md-12">
+                            <label>Retype Password</label>
+                            <input className="form-control" type="password" placeholder="Password"
+                            onChange={e => setretypePass(e.target.value)} value={retypePass}></input>
+                        </div>
+                        <h3>{ (mess !== "") && mess}</h3>
+                        <div className="col-md-12">
                             <br></br>
                             <button className="btn btn-info" onClick={save}>Save</button>
                         </div>
+                       
+                        
                 </div>
             </div>
         </div>

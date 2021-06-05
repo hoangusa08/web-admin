@@ -2,6 +2,7 @@ import API from '../Config/Api'
 import React, { useState, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 export default function EditCustomer(props) {
     const check = useContext(LoginContext);
     const history = useHistory();
@@ -51,8 +52,8 @@ export default function EditCustomer(props) {
                 // alert(response.data.message);
                 history.push({
                     pathname: '/customer',
-                    state: { report: 'Edit Customers Succeed ' }
                 }) 
+                success('Edit Success Customer');
             }).catch((error) =>{
                 alert(error.data.message);
             });

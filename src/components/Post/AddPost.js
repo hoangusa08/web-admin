@@ -4,11 +4,13 @@ import {LoginContext} from '../Context/LoginContext'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useHistory } from 'react-router';
+import { success } from '../Helper/Notification';
 function AddPost(props) {
     const [post, setPost] = useState({
         id: "",
         content: "",
-        id_image: null
+        id_image: 0,
+        link_image: ""
     });
 
     const history=useHistory();
@@ -68,8 +70,9 @@ function AddPost(props) {
             console.log(response.data)
             history.push({
                 pathname: '/posts',
-                state: { report: 'Add Success Post' }
+               
             }) 
+            success('Add Success Post');
         })
         .catch(errors => {
             console.log(errors)
