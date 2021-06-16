@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
 import { success } from '../Helper/Notification';
+import {storage} from '../FireBase'
 
 export default function NewImage() {
     const [message , setmessage] = useState("");
@@ -9,6 +10,7 @@ export default function NewImage() {
         name : "",
         link : ""
     });
+    const [image , setImage] = useState(null);
     const check = useContext(LoginContext);
     const saveImage =  (e) =>{
         if( newvalue.name === "" || newvalue.link ==="" ) {
@@ -27,6 +29,53 @@ export default function NewImage() {
             });
         }
     }
+    // const handleUpload = useCallback(() =>{
+    //     const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    //     uploadTask.on(
+    //         "state_changed",
+    //         snapshot => {},
+    //         error => {
+    //             console.log(error);
+    //         },
+    //         () => {
+    //             storage
+    //                 .ref("images")
+    //                 .child(image.name)
+    //                 .getDownloadURL()
+    //                 .then(url =>{
+    //                     console.log(url);
+    //                     setImage({...newvalue , link : url })
+                        
+    //                 });
+    //         }
+    //     )
+    //      setTimeout(console.log(newvalue) , 3000);
+    // }, [image])
+    const handleChange = e => {
+        console.log("abc")
+        if(e.target.files[0]){
+            // setImage(e.target.files[0]);
+            // handleUpload()
+            const uploadTask = storage.ref(`images/${e.target.files[0].name}`).put(e.target.files[0]);
+                uploadTask.on(
+                    "state_changed",
+                    snapshot => {},
+                    error => {
+                        console.log(error);
+                    },
+                    () => {
+                        storage
+                            .ref("images")
+                            .child(e.target.files[0].name)
+                            .getDownloadURL()
+                            .then(url =>{
+                                setnewvalue({...newvalue , link : url }) 
+                            });
+                    }
+                )
+        }
+    }
+    
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -51,10 +100,16 @@ export default function NewImage() {
                                     <input type="text" className="form-control" 
                                     onChange={e => setnewvalue({...newvalue ,name : e.target.value})} value={newvalue.name}></input>
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <label>Link Image </label>
                                     <input type="text" className="form-control" 
                                     onChange={e => setnewvalue({...newvalue ,link : e.target.value})} value={newvalue.link}></input>
+                                </div> */}
+                                <div className="form-group">
+                                    <label>File Image </label>
+                                    <input type="file" className="form-control" 
+                                        onChange={handleChange} ></input>
+                                   
                                 </div>
                                 {
                                     message !== "" ? (<p>you need enter value</p>) :( <></>)

@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "chart.js": "^3.2.1",
+    "firebase": "^8.6.7",
     "query-string": "^7.0.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
