@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
+import { storage } from '../FireBase';
 import { success } from '../Helper/Notification';
 
 export default function NewImage() {
@@ -43,6 +44,30 @@ export default function NewImage() {
             });
         }
     }
+    const handleChange = e => {
+        console.log("abc")
+        if(e.target.files[0]){
+            // setImage(e.target.files[0]);
+            // handleUpload()
+            const uploadTask = storage.ref(`images/${e.target.files[0].name}`).put(e.target.files[0]);
+                uploadTask.on(
+                    "state_changed",
+                    snapshot => {},
+                    error => {
+                        console.log(error);
+                    },
+                    () => {
+                        storage
+                            .ref("images")
+                            .child(e.target.files[0].name)
+                            .getDownloadURL()
+                            .then(url =>{
+                                setnewvalue({...newvalue , link : url }) 
+                            });
+                    }
+                )
+        }
+    }
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -70,7 +95,13 @@ export default function NewImage() {
                                 <div className="form-group">
                                     <label>Link Image </label>
                                     <input type="text" className="form-control" 
-                                    onChange={e => setnewvalue({...newvalue ,link : e.target.value})} value={newvalue.link}></input>
+                                    value={newvalue.link} disabled></input>
+                                </div>
+                                <div className="form-group">
+                                    <label>File Image </label>
+                                    <input type="file" className="form-control" 
+                                        onChange={handleChange} ></input>
+                                   
                                 </div>
                                 { (message === "") ? (
                                          <></>

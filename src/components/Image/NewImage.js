@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react'
+import React, {  useContext, useState } from 'react'
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
 import { success } from '../Helper/Notification';
@@ -10,7 +10,7 @@ export default function NewImage() {
         name : "",
         link : ""
     });
-    const [image , setImage] = useState(null);
+    // const [image , setImage] = useState(null);
     const check = useContext(LoginContext);
     const saveImage =  (e) =>{
         if( newvalue.name === "" || newvalue.link ==="" ) {
@@ -100,11 +100,11 @@ export default function NewImage() {
                                     <input type="text" className="form-control" 
                                     onChange={e => setnewvalue({...newvalue ,name : e.target.value})} value={newvalue.name}></input>
                                 </div>
-                                {/* <div className="form-group">
+                                <div className="form-group">
                                     <label>Link Image </label>
                                     <input type="text" className="form-control" 
-                                    onChange={e => setnewvalue({...newvalue ,link : e.target.value})} value={newvalue.link}></input>
-                                </div> */}
+                                    disabled value={newvalue.link}></input>
+                                </div>
                                 <div className="form-group">
                                     <label>File Image </label>
                                     <input type="file" className="form-control" 
