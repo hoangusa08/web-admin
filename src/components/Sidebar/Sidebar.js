@@ -134,7 +134,7 @@ function Sidebar() {
                                            color : 'while'
                                         }} exact>
                                             <i className="mdi mdi-human"></i>
-                                            <span className="hide-menu">Employer</span>
+                                            <span className="hide-menu">Employee</span>
                                         </NavLink>
                                     </li>
                                 </ul> 
