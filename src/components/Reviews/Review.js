@@ -107,7 +107,7 @@ export default function Review() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">List Review </h4>
-                                    <input class="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
+                                    <input className="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
                                     value={searchValue}></input>
                                     <button className="btn-search " onClick={search}><i className="fa fa-search"></i></button>
                                 </div>

@@ -5,6 +5,8 @@ import {
   Route,
 } from "react-router-dom";
 import LoginContextProvider from './components/Context/LoginContext'
+import CheckChangeContextProvider from './components/Context/CheckChangeContext';
+
 import Home from './components/Home/Home';
 import Products from './components/Product/Products'
 import Brands from './components/Brand/Brand'
@@ -56,6 +58,7 @@ function App() {
     <Router>
       <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full" data-boxed-layout="full">
           <LoginContextProvider>
+          <CheckChangeContextProvider>
             <Home/>
             <Alert stack={ { limit: 3 } } />
             <Switch>
@@ -118,6 +121,8 @@ function App() {
 
                 
             </Switch>
+                      
+          </CheckChangeContextProvider>
           </LoginContextProvider>
       </div>
     </Router>

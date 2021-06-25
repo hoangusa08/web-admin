@@ -3,8 +3,10 @@ import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
 import { success } from '../Helper/Notification';
+import { CheckChangeContext } from '../Context/CheckChangeContext';
 function EditInvoice(props) {
     const check = useContext(LoginContext);
+    const checkStatusInvoice = useContext(CheckChangeContext);
     const [invoice, setInvoice] = useState({
         name_Customer : "",
         listProduct: [],
@@ -96,7 +98,7 @@ function EditInvoice(props) {
                 
             }) 
             success('Invoice status has been updated successfully');
-            
+            checkStatusInvoice.changeStatusInvoice();
         }).catch((error) => {
 
         });

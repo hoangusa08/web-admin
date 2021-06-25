@@ -1,11 +1,47 @@
-import React, {  useContext, useEffect} from 'react';
+import React, { useState ,useContext, useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import {LoginContext} from '../Context/LoginContext'
+import API from '../Config/Api';
+import { CheckChangeContext } from '../Context/CheckChangeContext';
 function Sidebar() {
-    const check = useContext(LoginContext);
+    let token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
+    const [countInvoiceUnPaid, setCountInvoiceUnPaid] = useState(0);
+    const  check = useContext(LoginContext);
+    const checkStatusInvoice = useContext(CheckChangeContext);
+
     useEffect(() => {
         check.checklogin();
     }, [check.Fullname]);
+
+    useEffect(() => {
+        check.checklogin();
+        // const requestUrl = `/invoice/ByCustomer/status?${paramsString}`
+        const apiUrl = '/invoice/ByCustomer/all'
+        let count = 0
+        API.get(apiUrl,token).then((response)=> {   
+            
+            console.log(response.data)
+            let dataInvoice = response.data
+            let listIdInvoice = [] 
+            dataInvoice.forEach(element => {
+                if (listIdInvoice.includes(element.id)) {
+                    return;
+                } 
+                listIdInvoice.push(element.id)
+                if (element.is_paid == false) {
+                    count++;
+                }
+            });
+
+            console.log(listIdInvoice)
+            setCountInvoiceUnPaid(count)
+            
+        }).catch((error) =>{
+        });
+
+    }, [checkStatusInvoice.isChange]);
     return (
         <div className="left-sidebar" data-sidebarbg="skin5">
             <div className="scroll-sidebar">
@@ -89,13 +125,15 @@ function Sidebar() {
                                             <span className="hide-menu">Reviews</span>
                                         </NavLink>
                                     </li>
-                                    <li className="sidebar-item">
-                                        <NavLink className="sidebar-link waves-effect waves-dark sidebar-link" to="/invoice" aria-expanded="false"
+                                    <li className="sidebar-item ">
+                                        <NavLink className="sidebar-link waves-effect waves-dark sidebar-link header__cart-wrap" to="/invoice" aria-expanded="false"
                                         activeStyle={{
-                                           color : 'while'
+                                           color : 'while',
+                                           position: 'relative',
                                         }} exact>
                                             <i className="mdi mdi-select-inverse"></i>
                                             <span className="hide-menu">Invoice</span>
+                                            <span class="header__cart-notice">{countInvoiceUnPaid}</span>
                                         </NavLink>
                                     </li>
                                     <li className="sidebar-item">

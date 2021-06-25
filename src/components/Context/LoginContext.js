@@ -47,6 +47,7 @@ const LoginContextProvider =({children}) =>{
         localStorage.removeItem('user');
         history.push("/login");
     }
+
     //context data
     const LoginContextData = {
         Id : Id,

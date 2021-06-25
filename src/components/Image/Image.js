@@ -77,10 +77,10 @@ export default function Image() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List image </h4>
-                                        <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
+                                        <input placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
                                         value={searchValue}  className="input-search"></input>
                                         <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
-                                        <button className="btn1 btn btn-success" onClick ={e => {history.push("/newimage")}}>new</button>
+                                        <button className="btn1 btn btn-success" onClick ={e => {history.push("/newimage")}}>New</button>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

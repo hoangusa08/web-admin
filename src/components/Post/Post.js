@@ -90,9 +90,9 @@ function Post() {
                                     <h4 className="card-title">List Post <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/add-post")}} >New</button></h4>
                                 </div>
                                 {(alert.report != "") ?
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <div className="alert alert-warning alert-dismissible fade show" role="alert">
                                             {alert.report}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div> : <div></div>

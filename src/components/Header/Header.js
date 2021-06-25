@@ -52,11 +52,11 @@ function Header() {
                             <li className="nav-item dropdown">    
                                 <Dropdown >
                                     <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#2d3e55'}}>
-                                        welcome : {fullname}
+                                        Welcome : {fullname}
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu>
-                                        <Dropdown.Item onClick={LogoutHandle}  >logout</Dropdown.Item>
+                                        <Dropdown.Item onClick={LogoutHandle}  >Logout</Dropdown.Item>
                                         {localStorage.getItem("roleNames")==="employee" &&<Dropdown.Item onClick={Account}  >Account</Dropdown.Item>}
                                     </Dropdown.Menu>
                                 </Dropdown>
