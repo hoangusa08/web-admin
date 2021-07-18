@@ -98,7 +98,7 @@ export default function NewProduct() {
     function save () {
         console.log(dataoutput);
         API.post('product', dataoutput,token).then((response)=> {
-            success('Successfully added catogory');
+            success('Created new product successfully');
             window.location.reload()
         }).catch((error) =>{
             console.log(error.response)

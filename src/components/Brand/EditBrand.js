@@ -33,7 +33,7 @@ export default function EditBrand() {
                         history.push({
                             pathname: '/brands', 
                         }) 
-                        success('Edit Success Category');
+                        success('Edit Successfully Brand');
                     }).catch((error) =>{
                         alert(error.response.data.message);
                         console.log(error.response)

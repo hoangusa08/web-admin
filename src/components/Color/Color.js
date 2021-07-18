@@ -46,7 +46,7 @@ export default function Color() {
     function deleteColor (id) {
         Api.delete('color/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
-            success('Deleted category');
+            success('Deleted successfully color');
         }).catch((error) =>{
 
         }); 

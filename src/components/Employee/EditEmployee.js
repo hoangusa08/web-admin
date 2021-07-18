@@ -50,7 +50,7 @@ export default function EditEmployee() {
                     history.push({
                         pathname: '/employee', 
                     }) 
-                    success('Edit Success Category');
+                    success('Edited new employee successfully');
                 }).catch((error) =>{
                     alert(error.data.message);
                 });

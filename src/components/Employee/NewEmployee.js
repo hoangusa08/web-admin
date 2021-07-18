@@ -31,7 +31,7 @@ export default function NewEmployee() {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
                 Api.post("admin/user",user ,token).then((response)=> {
-                    success('Successfully added catogory');
+                    success('Created new employee successfully');
                     history.push("/employee")
                 }).catch((error) =>{
                     alert(error.response.data.message);

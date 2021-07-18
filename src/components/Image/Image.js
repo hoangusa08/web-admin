@@ -45,7 +45,7 @@ export default function Image() {
     function deleteimage (id) {
         Api.delete(`image/${id}`,token).then((response)=> {
             setFilters({...filters, id :id});
-            success('Deleted category');
+            success('Deleted Successfully Image');
         }).catch((error) =>{
         });
     }

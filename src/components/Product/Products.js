@@ -44,9 +44,8 @@ export default function Products() {
     function deleteproduct (id) {
         Api.delete('product/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
-            success('Deleted category');
+            success('Deleted product successfully');
         }).catch((error) =>{
-
         }); 
     }
     function search (){

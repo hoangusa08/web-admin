@@ -3,6 +3,7 @@ import Api from '../Config/Api'
 import {useHistory } from 'react-router-dom';
 import {LoginContext} from '../Context/LoginContext'
 import { success } from '../Helper/Notification';
+import Pagination from '../Pagination';
 
 export default function Employee() {
     const history = useHistory();
@@ -10,20 +11,38 @@ export default function Employee() {
     const [ListEmployee , setListEmployee] = useState([]);
     const [searchValue, setsearchValue] = useState("")
     const [runuseEff, setrunuseEff] = useState(1)
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 5,
+        totalPages: 1
+    })
+    const [filters, setFilters] = useState({
+        page: 0,
+        id : 0
+    })
+
     let token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
     useEffect(() => {
         Api.get('admin/user/employee',token).then((response)=> {
                 setListEmployee(response.data.content);
-                console.log(response.data.content);
+                setPagination({
+                    page: response.data.pageIndex,
+                    totalPages: response.data.totalPage
+                })
             }).catch((error) =>{
             });
     }, [runuseEff])
+    function handlePageChange(newPage) {
+        setFilters({ ...filters ,
+            page: newPage
+        })
+    }
     function deleteEmployee (id) {
         Api.delete(`admin/user/${id}`,token).then((response)=> {
             setrunuseEff(id)
-            success('Deleted category');
+            success('Deleted employee successfully');
         }).catch((error) =>{
             alert(error.data)
         });
@@ -90,6 +109,10 @@ export default function Employee() {
                                         </tbody>
                                     </table>
                                 </div>
+                                <Pagination
+                                    pagination={pagination}
+                                    onPageChange={handlePageChange}
+                                />
                             </div>
                         </div>
                     </div>

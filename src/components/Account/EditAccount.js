@@ -40,7 +40,7 @@ export default function EditAccount() {
         if( userUpdate.password !== "" && retypePass !== ""){
             if(userUpdate.password === retypePass) {
                 API.patch(`user/${localStorage.id}`, userUpdate , token).then((response)=> {
-                    success('Edit Success Category');
+                    success('Edit Successfully my account');
                     history.push("/myaccount");
                 }).catch((error) =>{
                     console.log(error.response.data);

@@ -121,7 +121,7 @@ export default function EditProduct() {
             history.push({
                 pathname: '/products', 
             }) 
-            success('Edit Success Category');
+            success('Edit product Successfully');
             }).catch((error) =>{
                 console.log(error.response)
             });

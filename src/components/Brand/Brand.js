@@ -41,7 +41,7 @@ export default function Brand() {
     function deletebrand (id) {
         Api.delete('brand/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
-            success('Deleted category');
+            success('Deleted successfully brand');
         }).catch((error) =>{
 
         }); 

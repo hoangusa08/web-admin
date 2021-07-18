@@ -19,7 +19,7 @@ export default function NewBrand() {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
                 }).then((response)=> {
-                success('Successfully added catogory');
+                success('Successfully added new Brand');
             }).catch((error) =>{
                 alert(error.response.data.message);
                 console.log(error.response.data)

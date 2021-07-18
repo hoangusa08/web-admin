@@ -27,13 +27,11 @@ export default function NewCustomer() {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
                 API.post("user", user , token).then((response)=> {
-                    // alert(response.data.message);
                     history.push({
                         pathname: '/customer',
                     }) 
-                    success('Successfully added customer');
+                    success('Successfully added new customer');
                 }).catch((error) =>{
-                    // alert(error.response.data.message);
                 });
             }
         }

@@ -34,7 +34,7 @@ export default function NewColor() {
                 history.push({
                     pathname: '/color', 
                 }) 
-                success('Edit Success Category');
+                success('Edit  successfully color');
                 }).catch((error) =>{
                     console.log(error)
                 });

@@ -19,7 +19,7 @@ export default function NewColor() {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
                 }).then((response)=> {
-                    success('Successfully added catogory');
+                    success('Successfully added new Color');
             }).catch((error) =>{
                 alert(error.message);
                 console.log(error)

@@ -65,7 +65,7 @@ export default function Category() {
         .then(response => {
             setFilters({...filters, category_edit_id: id})
             // console.log(response.data)
-            success('Deleted category');
+            success('Deleted successfully category');
         })
         .catch(errors => {
               console.log(errors)

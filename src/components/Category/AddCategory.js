@@ -24,7 +24,7 @@ export default function AddCategory() {
             history.push({
                 pathname: '/categorys',
             }) 
-            success('Successfully added catogory');
+            success('Successfully added new category');
         })
         .catch(errors => {
             console.log(errors)

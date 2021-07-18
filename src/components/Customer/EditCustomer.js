@@ -16,7 +16,6 @@ export default function EditCustomer(props) {
         id_role : 3,
     });
     const [message , setmessage] = useState("")
-    const [RetypePassword, setRetypePassword] = useState("");
     const id = props.match.params.id
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 

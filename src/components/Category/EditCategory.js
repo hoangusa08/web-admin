@@ -35,7 +35,7 @@ function EditCategory(props) {
             history.push({
                 pathname: '/categorys', 
             }) 
-            success('Edit Success Category');
+            success('Edit Successfully Category');
             
         }).catch((error) => {
 

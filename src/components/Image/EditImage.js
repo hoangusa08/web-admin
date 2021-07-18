@@ -38,7 +38,7 @@ export default function NewImage() {
                 history.push({
                     pathname: '/image', 
                 }) 
-                success('Edit Success Category');
+                success('Edit Successfully Image');
             }).catch((error) =>{
                 alert(error.message);
             });
@@ -47,8 +47,6 @@ export default function NewImage() {
     const handleChange = e => {
         console.log("abc")
         if(e.target.files[0]){
-            // setImage(e.target.files[0]);
-            // handleUpload()
             const uploadTask = storage.ref(`images/${e.target.files[0].name}`).put(e.target.files[0]);
                 uploadTask.on(
                     "state_changed",

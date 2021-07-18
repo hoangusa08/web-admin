@@ -10,7 +10,6 @@ export default function NewImage() {
         name : "",
         link : ""
     });
-    // const [image , setImage] = useState(null);
     const check = useContext(LoginContext);
     const saveImage =  (e) =>{
         if( newvalue.name === "" || newvalue.link ==="" ) {
@@ -22,7 +21,7 @@ export default function NewImage() {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
                 }).then((response)=> {
-                    success('Successfully added catogory');
+                    success('Successfully Added New Image');
             }).catch((error) =>{
                 alert(error.message);
                 console.log(error)
