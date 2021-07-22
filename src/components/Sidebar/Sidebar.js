@@ -133,7 +133,7 @@ function Sidebar() {
                                         }} exact>
                                             <i className="mdi mdi-select-inverse"></i>
                                             <span className="hide-menu">Invoice</span>
-                                            <span class="header__cart-notice">{countInvoiceUnPaid}</span>
+                                            <span className="header__cart-notice">{countInvoiceUnPaid}</span>
                                         </NavLink>
                                     </li>
                                     <li className="sidebar-item">

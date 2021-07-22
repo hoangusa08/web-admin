@@ -1,6 +1,6 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import React , {useState , useEffect, useContext} from 'react'
+import React , {useState , useEffect, useContext, useRef} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import API from '../Config/Api';
 import { success } from '../Helper/Notification';
@@ -32,6 +32,7 @@ export default function NewProduct() {
             string : ""
         }
     )
+    const typingTimeoutref = useRef(null)
     useEffect(() => {
         async function getdata (){
             check.checklogin();
@@ -65,7 +66,6 @@ export default function NewProduct() {
                     API.get('brand?search='+search.string, token).then((response)=> {
                         setlistBrand(response.data.content);
                     }).catch((error) =>{
-            
                     }); 
                     break;
                 case "category":
@@ -93,10 +93,10 @@ export default function NewProduct() {
                     break;
             }
         }
-        if(search.bool === true){ getdatas()}
+        if(search.bool === true && search.string){ getdatas()}
     }, [search]);
     function save () {
-        console.log(dataoutput);
+        console.log(dataoutput)
         API.post('product', dataoutput,token).then((response)=> {
             success('Created new product successfully');
             window.location.reload()
@@ -104,6 +104,17 @@ export default function NewProduct() {
             console.log(error.response)
         });
     }
+    function handleOnchangeSearch(e , searchBy){
+        const value = e.target.value;
+        if(typingTimeoutref.current){
+            clearTimeout(typingTimeoutref.current);
+        }
+        typingTimeoutref.current = setTimeout(() => {
+           
+            setsearch({...search , bool : true , name : searchBy, string : value})
+        } , 300)
+        setdataoutput({...dataoutput ,id_brand :  value })
+   }
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -135,7 +146,6 @@ export default function NewProduct() {
                             <div className="form-group">
                                 <label htmlFor="des">Description</label>
                                 <CKEditor
-                                    
                                     editor={ ClassicEditor }
                                     data=""
                                     onReady={ editor => {
@@ -151,9 +161,8 @@ export default function NewProduct() {
                                 <div className="row">
                                     <label className="idlabel" htmlFor="brand">Brand</label>
                                     <input list="brand" className="col-md-3"  
-                                        onChange={ e => {
-                                            setdataoutput({...dataoutput ,id_brand : e.target.value })
-                                            setsearch({...search , bool : true , name : "brand" , string : e.target.value})
+                                        onChange={ e =>{handleOnchangeSearch(e , "brand")
+                                        setdataoutput({...dataoutput ,id_brand :  e.target.value })
                                         }}></input>
                                     <datalist id="brand">
                                         {listBrand.map((brand) => (
@@ -162,10 +171,9 @@ export default function NewProduct() {
                                     </datalist>
                                     <label className="idlabel" htmlFor="category">Category</label>
                                     <input list="cate" className="col-md-3"
-                                        onChange={e => {
-                                            setdataoutput({...dataoutput ,id_cate : e.target.value })
-                                            setsearch({...search , bool : true , name : "category" , string : e.target.value})
-                                            }}></input>
+                                        onChange={ e => {
+                                            handleOnchangeSearch(e , "category")
+                                            setdataoutput({...dataoutput ,id_cate : e.target.value })}}></input>
                                     <datalist id="cate">
                                         {listCategory.map((category) => (
                                            <option value={category.id} key={category.id}>{category.name}</option>
@@ -173,9 +181,8 @@ export default function NewProduct() {
                                     </datalist>
                                     <label className="idlabel" htmlFor="image">Image</label>
                                     <input list="image" className="col-md-3"
-                                        onChange={e => {setdataoutput({...dataoutput ,id_image : e.target.value })
-                                        setsearch({...search , bool : true , name : "image" , string : e.target.value})
-                                        }}></input>
+                                       onChange={ e =>{handleOnchangeSearch(e , "image")
+                                       setdataoutput({...dataoutput ,id_image : e.target.value })}}></input>
                                     <datalist id="image">
                                         {listImage.map((ima) => (
                                            <option value={ima.id} key={ima.id}>{ima.name}</option>
@@ -196,9 +203,8 @@ export default function NewProduct() {
                                     </datalist>
                                     <label className="idlabel" htmlFor="Color">Color</label>
                                     <input list="color" className="col-md-3"
-                                    onChange={e => {setdataoutput({...dataoutput ,id_color : e.target.value })
-                                                    setsearch({...search , bool : true , name : "color" , string : e.target.value}) 
-                                            }}></input>
+                                        onChange={ e =>{handleOnchangeSearch(e , "color")
+                                        setdataoutput({...dataoutput ,id_color : e.target.value })}}></input>
                                     <datalist id="color">
                                         {listColor.map((color) => (
                                            <option value={color.id} key={color.id}>{color.name}</option>

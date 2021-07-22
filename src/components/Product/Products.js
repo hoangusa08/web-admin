@@ -55,7 +55,6 @@ export default function Products() {
             setListProduct(response.data.content);
         }).catch((error) =>{
         }); 
-        
     }
     return (
         <>

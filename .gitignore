@@ -24,3 +24,5 @@ yarn-error.log*
 
 .fake
 .ionide
+
+Api.js
