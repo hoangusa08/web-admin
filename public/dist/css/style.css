@@ -143,6 +143,23 @@ html {
   margin:20% auto;
   text-align:center;
 }
+
+.card-body ul{
+  position: absolute;
+  z-index: 50;
+  margin-top: 40px;
+  background-color: white;
+  width: 30%;
+  border: 1px solid rgb(90, 80, 80);
+}
+.card-body li{
+  list-style: none;
+  padding: 10px;
+  font-size: 15px;
+}
+.card-body li:hover{
+  color: #12aef4;
+}
 .login input[type="text"],
 .login input[type="password"] {
   max-width:400px;

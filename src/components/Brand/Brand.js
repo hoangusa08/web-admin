@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom';
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
 import { success } from '../Helper/Notification';
+import Search from '../Search';
 export default function Brand() {
     var token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
-    const [searchValue, setsearchValue] = useState("")
     const check = useContext(LoginContext);
     const [ListBrand , setListBrand] = useState([]);
     const history = useHistory();
@@ -16,6 +16,7 @@ export default function Brand() {
         page: 0,
         id : 0
     })
+    const [toggle, settoggle] = useState(false)
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -46,15 +47,6 @@ export default function Brand() {
 
         }); 
     }
-    function search (){
-        if (searchValue !== "")
-        Api.get('brand?search='+searchValue, token).then((response)=> {
-            // console.log(response.data)
-            // setListBrand(response.data.content);
-        }).catch((error) =>{
-        }); 
-        
-    }
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -62,7 +54,7 @@ export default function Brand() {
                 <h3 style={{textAlign : "center"}}>you need login</h3>
             </div>
         ) : (
-            <div className="page-wrapper">
+            <div className="page-wrapper" onClick={()=> settoggle(false)}>
                 <div className="page-breadcrumb">
                     <div className="col-5 align-self-center">
                         <h4 className="page-title">Brand</h4>
@@ -74,9 +66,7 @@ export default function Brand() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Brand</h4>
-                                        <input placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}  className="input-search"></input>
-                                        <button onClick={search} className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
+                                        <Search token={token} setList= {setListBrand} toggle={toggle} settoggle={settoggle} endpoint = {"brand"}></Search>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>New</button>
                                 </div>
                                 <div className="table-responsive">

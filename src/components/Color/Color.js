@@ -4,16 +4,17 @@ import Api from '../Config/Api';
 import Pagination from '../Pagination';
 import {LoginContext} from '../Context/LoginContext'
 import { success } from '../Helper/Notification';
+import Search from '../Search';
 
 export default function Color() {
     const [ListColor , setListColor] = useState([]);
     const history = useHistory();
-    const [searchValue, setsearchValue] = useState("")
     const check = useContext(LoginContext);
     const [filters, setFilters] = useState({
         page: 0,
         id : 0
     })
+    const [toggle, settoggle] = useState(false)
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -51,15 +52,6 @@ export default function Color() {
 
         }); 
     }
-    function search (){
-        if (searchValue !== "")
-        Api.get('color?search='+searchValue, token).then((response)=> {
-            console.log(response.data)
-            setListColor(response.data.content);
-        }).catch((error) =>{
-        }); 
-        
-    }
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -67,7 +59,7 @@ export default function Color() {
                 <h3 style={{textAlign : "center"}}>you need login</h3>
             </div>
         ) : (
-            <div className="page-wrapper">
+            <div className="page-wrapper"  onClick={()=> settoggle(false)}>
                 <div className="page-breadcrumb">
                     <div className="col-5 align-self-center">
                         <h4 className="page-title">Color</h4>
@@ -79,9 +71,7 @@ export default function Color() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Color</h4>
-                                        <input placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}  className="input-search"></input>
-                                        <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button> 
+                                        <Search token={token} setList= {setListColor} toggle={toggle} settoggle={settoggle} endpoint = {"color"}></Search>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button>
                                 </div>
                                 <div className="table-responsive">

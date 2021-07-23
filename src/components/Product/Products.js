@@ -4,15 +4,16 @@ import {useHistory } from 'react-router-dom';
 import Pagination from '../Pagination/index'
 import Api from '../Config/Api';
 import { success } from '../Helper/Notification';
+import Search from '../Search';
 export default function Products() {
     const history =useHistory();
     const [ListProduct , setListProduct] = useState([]);
     const check = useContext(LoginContext);
-    const [searchValue, setsearchValue] = useState("")
     const [filters, setFilters] = useState({
         page: 0,
         id : 0
     })
+    const [toggle, settoggle] = useState(false)
     var count = 0
     const [pagination, setPagination] = useState({
         page: 0,
@@ -48,14 +49,6 @@ export default function Products() {
         }).catch((error) =>{
         }); 
     }
-    function search (){
-        if (searchValue !== "")
-        Api.get('product?search='+searchValue, token).then((response)=> {
-            console.log(response.data)
-            setListProduct(response.data.content);
-        }).catch((error) =>{
-        }); 
-    }
     return (
         <>
             {(check.IsLogin === false ) ? (
@@ -63,7 +56,7 @@ export default function Products() {
                     <h3 style={{textAlign : "center"}}>You need login</h3>
                 </div>
             ) : (
-            <div className="page-wrapper">
+            <div className="page-wrapper" onClick={()=> settoggle(false)}>
                 <div className="page-breadcrumb">
                         <div className="col-5 align-self-center">
                             <h4 className="page-title">Product</h4>
@@ -75,9 +68,7 @@ export default function Products() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Product </h4>
-                                            <input placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
-                                            value={searchValue}  className="input-search"></input>
-                                            <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
+                                        <Search token={token} setList= {setListProduct} toggle={toggle} settoggle={settoggle} endpoint = {"product"}></Search>
                                         <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/newproduct")}}>New</button>
                                 </div>
                                 <div className="table-responsive">
