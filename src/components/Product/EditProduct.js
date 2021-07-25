@@ -29,7 +29,6 @@ export default function EditProduct() {
             check.checklogin();
             await API.get('product/getOneToUpdate/' + array[array.length-1], token).then((response)=> {
                 let temp = response.data
-                console.log(temp);
                 setdataoutput({...dataoutput ,
                     id_cate: temp.id_cate,
                     id_brand: temp.id_brand,
@@ -39,9 +38,9 @@ export default function EditProduct() {
                     name_size : temp.name_size,
                     number : temp.number,
                     id_image : temp.id_image,
-                    id_color : temp.id_color,
-                    des: temp.des
+                    id_color : temp.id_color
                 })
+                setdataoutput({...dataoutput , des: temp.des})
             }).catch((error) =>{
              
             });
@@ -124,7 +123,6 @@ export default function EditProduct() {
         } , 300)
         setdataoutput({...dataoutput ,id_brand :  value })
    }
-   console.log(dataoutput)
     return (
         <>
         {(check.IsLogin === false ) ? (
