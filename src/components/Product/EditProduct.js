@@ -6,9 +6,7 @@ import {useHistory} from 'react-router-dom'
 import API from '../Config/Api';
 import { success } from '../Helper/Notification';
 export default function EditProduct() {
-    const token = {
-        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-    }
+    var token ={headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} }
     const history = useHistory();
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
@@ -17,16 +15,6 @@ export default function EditProduct() {
     const check = useContext(LoginContext);
     let array = window.location.pathname.split("/");
     const [dataoutput, setdataoutput] = useState({
-        id_cate: 0,
-        id_brand: 0,
-        id_gender : 0,
-        name: "",
-        price: "",
-        name_size : "L",
-        number : "",
-        id_image : 0,
-        id_color : 0,
-        des: "",
     })
     const [search, setsearch] = useState(
         {
@@ -39,8 +27,9 @@ export default function EditProduct() {
     useEffect(() => {
         async function getdata (){
             check.checklogin();
-            API.get('product/getOneToUpdate/' + array[array.length-1], token).then((response)=> {
+            await API.get('product/getOneToUpdate/' + array[array.length-1], token).then((response)=> {
                 let temp = response.data
+                console.log(temp);
                 setdataoutput({...dataoutput ,
                     id_cate: temp.id_cate,
                     id_brand: temp.id_brand,
@@ -51,28 +40,27 @@ export default function EditProduct() {
                     number : temp.number,
                     id_image : temp.id_image,
                     id_color : temp.id_color,
+                    des: temp.des
                 })
-                setdataoutput({...dataoutput , des: temp.des})
             }).catch((error) =>{
              
             });
-          
-            API.get('category', token).then((response)=> {
+            await API.get('category', token).then((response)=> {
                 setlistCategory(response.data.content);
             }).catch((error) =>{
     
             });
-            API.get('image', token).then((response)=> {
+            await API.get('image', token).then((response)=> {
                 setlistImage(response.data.content);
             }).catch((error) =>{
     
             });
-            API.get('brand', token).then((response)=> {
+            await API.get('brand', token).then((response)=> {
                 setlistBrand(response.data.content);
             }).catch((error) =>{
     
             });
-            API.get('color', token).then((response)=> {
+            await API.get('color', token).then((response)=> {
                 setlistColor(response.data.content);
             }).catch((error) =>{
     
@@ -84,31 +72,30 @@ export default function EditProduct() {
         async function getdatas (){
             switch (search.name) {
                 case "brand":
-                    API.get('brand?search='+search.string, token).then((response)=> {
+                    await API.get('brand?search='+search.string, token).then((response)=> {
                         setlistBrand(response.data.content);
                     }).catch((error) =>{
             
                     }); 
                     break;
                 case "category":
-                    API.get('category?search='+search.string, token).then((response)=> {
+                    await API.get('category?search='+search.string, token).then((response)=> {
                         setlistCategory(response.data.content);
                     }).catch((error) =>{
             
                     }); 
                     break;
                 case "color":
-                    API.get('color?search='+search.string, token).then((response)=> {
+                    await API.get('color?search='+search.string, token).then((response)=> {
                         setlistColor(response.data.content);
                     }).catch((error) =>{
             
                     }); 
                     break;
                 case "image":
-                    API.get('image?search='+search.string, token).then((response)=> {
+                    await API.get('image?search='+search.string, token).then((response)=> {
                         setlistImage(response.data.content);
                     }).catch((error) =>{
-            
                     }); 
                     break;
                 default:
@@ -116,7 +103,7 @@ export default function EditProduct() {
             }
         }
         if(search.bool === true && search.string){ getdatas()}
-    }, [search]);
+    }, [search,token]);
     function save () {
         API.patch('product/'+array[array.length-1], dataoutput,token).then((response)=> {
             history.push({
@@ -133,11 +120,11 @@ export default function EditProduct() {
             clearTimeout(typingTimeoutref.current);
         }
         typingTimeoutref.current = setTimeout(() => {
-           
             setsearch({...search , bool : true , name : searchBy, string : value})
         } , 300)
         setdataoutput({...dataoutput ,id_brand :  value })
    }
+   console.log(dataoutput)
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -158,12 +145,12 @@ export default function EditProduct() {
                         <form className="form-horizontal m-t-30">
                             <div className="form-group">
                                 <label htmlFor="name">Name</label>
-                                <input type="text" className="form-control" value={dataoutput.name} id="name"
+                                <input type="text" className="form-control" value={dataoutput?.name} id="name"
                                  onChange={e => setdataoutput({...dataoutput ,name : e.target.value})}/>
                             </div>
                             <div className="form-group">
                                 <label  htmlFor="price">Price</label>
-                                <input type="text" className="form-control" value={dataoutput.price} id="price"
+                                <input type="text" className="form-control" value={dataoutput?.price} id="price"
                                  onChange={e => setdataoutput({...dataoutput ,price : e.target.value})}/>
                             </div>
                             <div className="form-group">
@@ -171,7 +158,7 @@ export default function EditProduct() {
                                 <CKEditor
                                     
                                     editor={ ClassicEditor }
-                                    data={dataoutput.des}
+                                    data={dataoutput?.des}
                                     onReady={ editor => {
                                         console.log( 'Editor is ready to use!', editor );
                                     } }
@@ -184,7 +171,7 @@ export default function EditProduct() {
                             <div className="form-group">
                                 <div className="row">
                                     <label className="idlabel" htmlFor="brand">Brand</label>
-                                    <input list="brand" className="col-md-3" value={dataoutput.id_brand} 
+                                    <input list="brand" className="col-md-3" value={dataoutput?.id_brand} 
                                          onChange={ e =>{handleOnchangeSearch(e , "brand")
                                          setdataoutput({...dataoutput ,id_brand :  e.target.value })
                                          }}></input>
@@ -194,7 +181,7 @@ export default function EditProduct() {
                                         ))}
                                     </datalist>
                                     <label className="idlabel" htmlFor="category">Category</label>
-                                    <input list="cate" className="col-md-3" value={dataoutput.id_cate}
+                                    <input list="cate" className="col-md-3" value={dataoutput?.id_cate}
                                         onChange={ e => {
                                             handleOnchangeSearch(e , "category")
                                             setdataoutput({...dataoutput ,id_cate : e.target.value })}}></input>
@@ -204,7 +191,7 @@ export default function EditProduct() {
                                         ))}
                                     </datalist>
                                     <label className="idlabel" htmlFor="image">Image</label>
-                                    <input list="image" className="col-md-3" value = {dataoutput.id_image}
+                                    <input list="image" className="col-md-3" value = {dataoutput?.id_image}
                                          onChange={ e =>{handleOnchangeSearch(e , "image")
                                          setdataoutput({...dataoutput ,id_image : e.target.value })}}></input>
                                     <datalist id="image">
@@ -217,7 +204,7 @@ export default function EditProduct() {
                             <div className="form-group">
                                 <div className="row">
                                     <label className="idlabel" htmlFor="size">Size  :</label>
-                                    <input list="size" className="col-md-3" value={dataoutput.name_size}
+                                    <input list="size" className="col-md-3" value={dataoutput?.name_size}
                                     onChange={e => setdataoutput({...dataoutput ,name_size : e.target.value })}></input>
                                     <datalist id="size">
                                         <option value="M" key="M">M</option>
@@ -226,7 +213,7 @@ export default function EditProduct() {
                                         <option value="XXL" key="XXL">XXL</option>
                                     </datalist>
                                     <label className="idlabel" htmlFor="Color">Color</label>
-                                    <input list="color" className="col-md-3" value={dataoutput.id_color}
+                                    <input list="color" className="col-md-3" value={dataoutput?.id_color}
                                         onChange={ e =>{handleOnchangeSearch(e , "color")
                                         setdataoutput({...dataoutput ,id_color : e.target.value })}}></input>
                                     <datalist id="color">
@@ -235,7 +222,7 @@ export default function EditProduct() {
                                         ))}
                                     </datalist>
                                     <label  className="idlabel" htmlFor="number">Number</label>
-                                    <input type="text" className="col-md-3"  value={dataoutput.number} id="number"
+                                    <input type="text" className="col-md-3"  value={dataoutput?.number} id="number"
                                     onChange={e => setdataoutput({...dataoutput ,number : e.target.value})}/>
                                 </div>
                             </div>

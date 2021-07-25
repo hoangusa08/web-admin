@@ -3,12 +3,13 @@ import API from '../Config/Api'
 import Pagination from '../Pagination/index'
 import { useHistory } from 'react-router-dom';
 import { success } from '../Helper/Notification';
+import Search from '../Search';
 export default function Customer() {
     const [searchValue, setsearchValue] = useState("")
     const history = useHistory();
     const [ListCustomer , setListCustomer] = useState([]);
     const [runuseEff, setrunuseEff] = useState(1)
-
+    const [toggle, settoggle] = useState(false)
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -17,7 +18,6 @@ export default function Customer() {
     let token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
-
 
     const [filters, setFilters] = useState({
         page: 0,
@@ -58,21 +58,8 @@ export default function Customer() {
         });
     }
 
-    function search (){
-        if (searchValue !== "")
-        API.get('user/customer?search='+searchValue, token).then((response)=> {
-            // console.log(response.data)
-            setListCustomer(response.data.content);
-            setPagination({
-                page: response.data.pageIndex,
-                totalPages: response.data.totalPage
-            })
-        }).catch((error) =>{
-        }); 
-        
-    }
     return (
-            <div className="page-wrapper">
+            <div className="page-wrapper" onClick={()=> settoggle(false)}>
                 <div className="page-breadcrumb">
                     <div className="row">
                         <div className="col-5 align-self-center">
@@ -87,9 +74,7 @@ export default function Customer() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">List Customer <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-customer")}}>New</button></h4>
-                                    <input className="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}></input>
-                                    <button className="btn-search " onClick={search}><i className="fa fa-search"></i></button>
+                                    <Search token={token} setList= {setListCustomer} toggle={toggle} settoggle={settoggle} endpoint = {"user/customer"}></Search>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

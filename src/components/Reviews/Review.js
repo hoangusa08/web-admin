@@ -6,23 +6,22 @@ import queryString from 'query-string'
 import {LoginContext} from '../Context/LoginContext'
 import { useHistory } from 'react-router';
 import { success } from '../Helper/Notification';
+import Search from '../Search';
 export default function Review() {
     const [searchValue, setsearchValue] = useState("")
     const history = useHistory()
     const check = useContext(LoginContext);
+    const [toggle, settoggle] = useState(false)
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
         totalPages: 1
     })
-
     const [filters, setFilters] = useState({
         page: 0,
         category_delete_id: 0
     })
-
     const [ListReview , setListReview] = useState([]);
-
     let token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
@@ -33,6 +32,7 @@ export default function Review() {
             const paramsString = queryString.stringify(filters)
             const requestUrl = `review?${paramsString}`
             API.get(requestUrl,token).then((response)=> {
+                console.log(response.data.content)
                 setListReview(response.data.content)
                 setPagination({
                     page: response.data.pageIndex,
@@ -77,22 +77,8 @@ export default function Review() {
         })
     }
 
-    function search (){
-        if (searchValue !== "")
-        API.get('review?search='+searchValue, token).then((response)=> {
-            // console.log(response.data)
-            setListReview(response.data.content);
-            setPagination({
-                page: response.data.pageIndex,
-                totalPages: response.data.totalPage
-            })
-        }).catch((error) =>{
-        }); 
-        
-    }
-
     return (
-            <div className="page-wrapper">
+            <div className="page-wrapper" onClick={()=> settoggle(false)}>
                 <div className="page-breadcrumb">
                     <div className="row">
                         <div className="col-5 align-self-center">
@@ -107,9 +93,7 @@ export default function Review() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">List Review </h4>
-                                    <input className="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
-                                    value={searchValue}></input>
-                                    <button className="btn-search " onClick={search}><i className="fa fa-search"></i></button>
+                                    <Search token={token} setList= {setListReview} toggle={toggle} settoggle={settoggle} endpoint = {"review"}></Search>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

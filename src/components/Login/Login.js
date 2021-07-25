@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react'
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
+import { CheckChangeContext } from '../Context/CheckChangeContext';
 export default function Login() {
     const [userInput , setuserInput] = useState({username:"", password:""});
     const [errorMessage, setErrorMessage] = useState(null);
     const { LoginDispatch} = useContext(LoginContext);
+    const checkStatusInvoice = useContext(CheckChangeContext);
     const OnSubmitHandle =  (e) =>{
         if( userInput.username === ""  || userInput.password === "") {
             setErrorMessage("You have not entered username or password")
@@ -18,6 +20,7 @@ export default function Login() {
                     localStorage.setItem("username", info.username);
                     localStorage.setItem("fullname", info.fullName);
                     localStorage.setItem("roleNames", info.roleNames);
+                    checkStatusInvoice.changeStatusInvoice();
                     setErrorMessage("")
                     LoginDispatch();
                 }else{

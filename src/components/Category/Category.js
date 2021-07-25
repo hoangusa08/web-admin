@@ -6,6 +6,7 @@ import queryString from 'query-string'
 import { LoginContext } from '../Context/LoginContext'
 import { useLocation } from "react-router-dom";
 import { success } from '../Helper/Notification';
+import Search from '../Search';
 export default function Category() {
     const [searchValue, setsearchValue] = useState("")
     const check = useContext(LoginContext);
@@ -24,15 +25,12 @@ export default function Category() {
     })
     const history = useHistory()
     const [ListCategory , setListCategory] = useState([]);
-
+    const [toggle, settoggle] = useState(false)
     let token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
     useEffect(() => {
         async function getData () {
-            let token = {
-                headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-            }
             check.checklogin();
             const paramsString = queryString.stringify(filters)
             const requestUrl = `category?${paramsString}`
@@ -72,22 +70,8 @@ export default function Category() {
         })
     }
 
-    function search (){
-        if (searchValue !== "")
-        API.get('category?search='+searchValue, token).then((response)=> {
-            // console.log(response.data)
-            setListCategory(response.data.content);
-            setPagination({
-                page: response.data.pageIndex,
-                totalPages: response.data.totalPage
-            })
-        }).catch((error) =>{
-        }); 
-        
-    }
-
     return (
-            <div className="page-wrapper">
+            <div className="page-wrapper" onClick={()=> settoggle(false)}>
                 <div className="page-breadcrumb">
                     <div className="col-5 align-self-center">
                         <h4 className="page-title">Category</h4>
@@ -99,9 +83,7 @@ export default function Category() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Category <button className="btn1 btn btn-success" onClick ={e => {history.push("/addcategory")}} >New</button></h4>
-                                        <input className="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}></input>
-                                        <button className="btn-search " onClick={search}><i className="fa fa-search"></i></button>
+                                        <Search token={token} setList= {setListCategory} toggle={toggle} settoggle={settoggle} endpoint = {"category"}></Search>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
