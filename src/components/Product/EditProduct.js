@@ -6,7 +6,6 @@ import {useHistory} from 'react-router-dom'
 import API from '../Config/Api';
 import { success } from '../Helper/Notification';
 export default function EditProduct() {
-    var token ={headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} }
     const history = useHistory();
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
@@ -16,6 +15,9 @@ export default function EditProduct() {
     let array = window.location.pathname.split("/");
     const [dataoutput, setdataoutput] = useState({
     })
+    var token ={
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
     const [search, setsearch] = useState(
         {
             bool : false , 
@@ -27,23 +29,8 @@ export default function EditProduct() {
     useEffect(() => {
         async function getdata (){
             check.checklogin();
-            await API.get('product/getOneToUpdate/' + array[array.length-1], token).then((response)=> {
-                let temp = response.data
-                setdataoutput({...dataoutput ,
-                    id_cate: temp.id_cate,
-                    id_brand: temp.id_brand,
-                    id_gender : temp.id_gender,
-                    name: temp.name,
-                    price: temp.price,
-                    name_size : temp.name_size,
-                    number : temp.number,
-                    id_image : temp.id_image,
-                    id_color : temp.id_color
-                })
-                setdataoutput({...dataoutput , des: temp.des})
-            }).catch((error) =>{
-             
-            });
+            let  temp = await API.get('product/getOneToUpdate/' + array[array.length-1], token)
+            setdataoutput(temp.data)
             await API.get('category', token).then((response)=> {
                 setlistCategory(response.data.content);
             }).catch((error) =>{
@@ -112,6 +99,7 @@ export default function EditProduct() {
             }).catch((error) =>{
                 console.log(error.response)
             });
+        console.log(dataoutput);
     }
     function handleOnchangeSearch(e , searchBy){
         const value = e.target.value;
@@ -123,6 +111,7 @@ export default function EditProduct() {
         } , 300)
         setdataoutput({...dataoutput ,id_brand :  value })
    }
+   console.log(dataoutput)
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -160,8 +149,8 @@ export default function EditProduct() {
                                     onReady={ editor => {
                                         console.log( 'Editor is ready to use!', editor );
                                     } }
-                                    onChange={ ( event, editor ) => {
-                                        let data = editor.getData();
+                                    onBlur={ ( event, editor ) => {
+                                        const data = editor.getData();
                                         setdataoutput({...dataoutput , des : data});
                                     } }
                                 />
@@ -227,11 +216,11 @@ export default function EditProduct() {
 
                             <div className="form-group">
                                 <label>Gender</label><br></br>
-                                <input type="radio" id="male" value="Male" name="gender"
+                                <input type="radio" id="male" value="Male" name="gender" checked={dataoutput?.id_gender === 1}
                                 onChange={e => setdataoutput({...dataoutput ,id_gender : 1})}/><label htmlFor="male" className="idlabel" >Male</label>
-                                <input type="radio" id="female" value="Female" name="gender"
+                                <input type="radio" id="female" value="Female" name="gender" checked={dataoutput?.id_gender === 2}
                                 onChange={e => setdataoutput({...dataoutput ,id_gender : 2})}/><label htmlFor="female"className="idlabel" >Female</label>
-                                <input type="radio" id="couple" value="Couple" name="gender"
+                                <input type="radio" id="couple" value="Couple" name="gender" checked={dataoutput?.id_gender === 3}
                                 onChange={e => setdataoutput({...dataoutput ,id_gender : 3})}/><label htmlFor="couple"className="idlabel" >Couple</label><br></br>
                             </div>
                             <div className="form-group">
