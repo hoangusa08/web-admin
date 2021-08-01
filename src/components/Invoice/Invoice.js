@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
 import { useLocation } from "react-router-dom";
 import { success } from '../Helper/Notification';
+import Search from '../Search';
 export default function Invoice() {
 
     const check = useContext(LoginContext);
@@ -26,6 +27,8 @@ export default function Invoice() {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
+
+    const [toggle, settoggle] = useState(false)
 
     useEffect(() => {
         async function getData () {
@@ -90,7 +93,9 @@ export default function Invoice() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title">List Invoice <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-invoice")}}>New</button></h4>
+                                    <h4 className="card-title">List Invoice </h4>
+                                    <Search token={token} setList= {setListInvoice} toggle={toggle} settoggle={settoggle} endpoint = {"invoice/ByCustomer/status"}></Search>
+                                    <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-invoice")}}>New</button>
                                 </div>
                                                              
                                 <div className="table-responsive">
@@ -111,8 +116,9 @@ export default function Invoice() {
                                                     <td>{(Invoice.is_paid) ? "Paid" : "Unpaid"} </td>
 
                                                     <td> <button id = {Invoice.id} onClick ={ e=> {history.push(`/view-invoice/${Invoice.id}`)}} className="btn btn-success">View</button> {(!Invoice.is_paid) ? <button
-                                                                 id = {Invoice.id} onClick ={ e=> {history.push(`/edit-invoice/${Invoice.id}`)}} className="btn btn-info">Edit</button> : ""}  <button 
-                                                                id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button></td>
+                                                                 id = {Invoice.id} onClick ={ e=> {history.push(`/edit-invoice/${Invoice.id}`)}} className="btn btn-info">Edit</button>  : ""} {(!Invoice.is_paid) ? <button  
+                                                                 id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button>  : ""} </td>
+                                                                 
                                                 </tr>
                                             ))}
                                         </tbody>

@@ -20,6 +20,7 @@ export default function NewBrand() {
                         } 
                 }).then((response)=> {
                 success('Successfully added new Brand');
+               
             }).catch((error) =>{
                 alert(error.response.data.message);
                 console.log(error.response.data)

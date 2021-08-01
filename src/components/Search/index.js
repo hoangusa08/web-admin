@@ -39,7 +39,7 @@ export default function Search(props) {
                 <ul>
                     {
                         listSearch.map((p) =>(
-                            <li onClick={()=>setsearchValue(p.name ? p.name : (p.userName ? p.userName : p.content))}>{p.name ? p.name : (p.userName ? p.userName : p.content)}</li>
+                            <li onClick={()=>setsearchValue(p.name ? p.name : (p.userName ? p.userName : (p.content ? p.content : p.nameCustomer)))}>{p.name ? p.name : (p.userName ? p.userName : (p.content ? p.content : p.nameCustomer))}</li>
                         ))
                     }
                 </ul>

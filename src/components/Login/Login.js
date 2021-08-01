@@ -5,13 +5,16 @@ import { CheckChangeContext } from '../Context/CheckChangeContext';
 export default function Login() {
     const [userInput , setuserInput] = useState({username:"", password:""});
     const [errorMessage, setErrorMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false)
     const { LoginDispatch} = useContext(LoginContext);
     const checkStatusInvoice = useContext(CheckChangeContext);
     const OnSubmitHandle =  (e) =>{
         if( userInput.username === ""  || userInput.password === "") {
             setErrorMessage("You have not entered username or password")
         }else{
+            setIsLoading(true)
             Api.post("auth/login", userInput).then((response)=> {
+                setIsLoading(false)
                 setErrorMessage(null);
                 const {token, info} = response.data;
                 if(response.data.info.roleNames[0] === "admin" || response.data.info.roleNames[0] === "employee"){
@@ -56,7 +59,7 @@ export default function Login() {
                 onChange={e => setuserInput({...userInput ,password : e.target.value})} value={userInput.password}/>
                 <br></br>
                 </div>
-                <input type="button" value="Login" className="login-button"
+                <input type="button" value={isLoading ? "loading" : "Login"} className="login-button"
                 onClick={OnSubmitHandle}/>
                 <br></br>        
                 {errorMessage && (
