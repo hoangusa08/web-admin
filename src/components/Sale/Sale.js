@@ -16,6 +16,7 @@ export default function Sale() {
         check.checklogin();
         Api.get('saleFigureEmployee',token).then((response)=> {
             setListSale(response.data.content);
+            console.log(response.data.content);
             }).catch((error) =>{
             });
         Api.get('saleFigure/getTotalProductSold',token).then((response)=> {
@@ -76,7 +77,7 @@ export default function Sale() {
                                     ],
                                     datasets: [
                                         {
-                                        label: "Monthly revenue (Billions USD)",
+                                        label: "Monthly revenue (Million VND)",
                                         backgroundColor: [
                                             "#c45851",
                                             "#c45852",

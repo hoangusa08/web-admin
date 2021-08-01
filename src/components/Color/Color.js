@@ -71,7 +71,7 @@ export default function Color() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Color</h4>
-                                        <Search token={token} setList= {setListColor} toggle={toggle} settoggle={settoggle} endpoint = {"color"}></Search>
+                                        <Search token={token} setList= {setListColor} toggle={toggle} settoggle={settoggle} endpoint = {"color"} setPagination={setPagination}></Search>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button>
                                 </div>
                                 <div className="table-responsive">

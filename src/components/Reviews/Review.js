@@ -93,7 +93,7 @@ export default function Review() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">List Review </h4>
-                                    <Search token={token} setList= {setListReview} toggle={toggle} settoggle={settoggle} endpoint = {"review"}></Search>
+                                    <Search token={token} setList= {setListReview} toggle={toggle} settoggle={settoggle} endpoint = {"review"} setPagination={setPagination}></Search>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

@@ -66,7 +66,7 @@ export default function Brand() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Brand</h4>
-                                        <Search token={token} setList= {setListBrand} toggle={toggle} settoggle={settoggle} endpoint = {"brand"}></Search>
+                                        <Search token={token} setList= {setListBrand} toggle={toggle} settoggle={settoggle} endpoint = {"brand"} setPagination={setPagination}></Search>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>New</button>
                                 </div>
                                 <div className="table-responsive">

@@ -57,7 +57,7 @@ export default function EditBrand() {
                     <div className="row">
                         <div className="col-12">
                             <div className="card card-body">
-                                <h4 className="card-title">New</h4>
+                                <h4 className="card-title">Edit</h4>
                                 <form className="form-horizontal m-t-30">
                                     <div className="form-group">
                                         <label>Name Brand <span className="help"> e.g. "Gucci"</span></label>

@@ -87,7 +87,8 @@ function EditInvoice(props) {
     const editIsPaid = (e) => {
         e.preventDefault();  
         const data = {
-            is_paid: invoice.is_paid
+            is_paid: invoice.is_paid ,
+            id_employee: localStorage.getItem('id')
         }
         console.log(data)
 

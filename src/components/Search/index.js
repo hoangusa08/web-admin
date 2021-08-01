@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import Api from '../Config/Api';
 
 export default function Search(props) {
-    const {token , setList ,toggle , settoggle , endpoint} = props
+    const {token , setList ,toggle , settoggle , endpoint , setPagination} = props
     const [searchValue, setsearchValue] = useState("")
     const typingTimeoutref = useRef(null)
    
@@ -26,6 +26,10 @@ export default function Search(props) {
         if (searchValue !== "")
         Api.get(`${endpoint}?search=`+searchValue, token).then((response)=> {
             setList(response.data.content);
+            setPagination({
+                page: response.data.pageIndex,
+                totalPages: response.data.totalPage
+            })
         }).catch((error) =>{
         }); 
         settoggle(false)

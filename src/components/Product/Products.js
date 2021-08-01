@@ -68,7 +68,7 @@ export default function Products() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Product </h4>
-                                        <Search token={token} setList= {setListProduct} toggle={toggle} settoggle={settoggle} endpoint = {"product"}></Search>
+                                        <Search token={token} setList= {setListProduct} toggle={toggle} settoggle={settoggle} endpoint = {"product"} setPagination={setPagination}></Search>
                                         <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/newproduct")}}>New</button>
                                 </div>
                                 <div className="table-responsive">

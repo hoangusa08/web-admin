@@ -68,7 +68,7 @@ export default function Image() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List image </h4>
-                                        <Search token={token} setList= {setListimage} toggle={toggle} settoggle={settoggle} endpoint = {"image"}></Search>
+                                        <Search token={token} setList= {setListimage} toggle={toggle} settoggle={settoggle} endpoint = {"image"} setPagination={setPagination}></Search>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newimage")}}>New</button>
                                 </div>
                                 <div className="table-responsive">

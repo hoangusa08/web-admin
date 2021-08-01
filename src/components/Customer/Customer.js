@@ -74,7 +74,7 @@ export default function Customer() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">List Customer <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-customer")}}>New</button></h4>
-                                    <Search token={token} setList= {setListCustomer} toggle={toggle} settoggle={settoggle} endpoint = {"user/customer"}></Search>
+                                    <Search token={token} setList= {setListCustomer} toggle={toggle} settoggle={settoggle} endpoint = {"user/customer"} setPagination={setPagination}></Search>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

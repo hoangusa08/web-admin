@@ -67,7 +67,7 @@ export default function Employee() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Employee </h4>
-                                        <Search token={token} setList= {setListEmployee} toggle={toggle} settoggle={settoggle} endpoint = {"admin/user/employee"}></Search>
+                                        <Search token={token} setList= {setListEmployee} toggle={toggle} settoggle={settoggle} endpoint = {"admin/user/employee"} setPagination={setPagination}></Search>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newemployee")}}>new</button>
                                 </div>
                                 <div className="table-responsive">

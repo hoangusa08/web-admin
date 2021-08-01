@@ -83,7 +83,7 @@ export default function Category() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Category <button className="btn1 btn btn-success" onClick ={e => {history.push("/addcategory")}} >New</button></h4>
-                                        <Search token={token} setList= {setListCategory} toggle={toggle} settoggle={settoggle} endpoint = {"category"}></Search>
+                                        <Search token={token} setList= {setListCategory} toggle={toggle} settoggle={settoggle} endpoint = {"category"} setPagination={setPagination}></Search>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
