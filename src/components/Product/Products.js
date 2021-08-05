@@ -90,7 +90,7 @@ export default function Products() {
                                                     <td>{product.name}</td>
                                                     <td>{product.number}</td>
                                                     <td>{product.name_Size}</td>
-                                                    <td><a href={product.link} target="_blank">click in here</a></td>
+                                                    <td><a href={product.link} target="_blank"><img className="img-link" src={product.link}/> </a></td>
                                                     <td><button className="btn btn-success" onClick ={ e=> {history.push(`/product/${product.id}`)}}>View</button> <button 
                                                     className="btn btn-info" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>Edit</button> <button 
                                                     className="btn btn-danger" onClick = {deleteproduct.bind(this, product.id)}>Delete</button></td>
