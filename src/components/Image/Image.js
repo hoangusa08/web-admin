@@ -77,7 +77,7 @@ export default function Image() {
                                             <tr>
                                             <th scope="col">Id</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Link</th>
+                                            <th scope="col">Image</th>
                                             <th scope="col">Action</th>
 
                                             </tr>
@@ -88,7 +88,7 @@ export default function Image() {
                                                 <tr key={image.id}>
                                                     <th scope="row">{image.id}</th>
                                                     <td>{image.name}</td>
-                                                    <td><a href={image.link} target="_blank"> click in here </a>  </td>
+                                                    <td><a href={image.link} target="_blank"> <img className="img-link" src={image.link}/> </a></td>
                                                     <td><button className="btn btn-info"  onClick ={e => {history.push(`/editimage/${image.id}`)}}>Edit</button> <button className="btn btn-danger" onClick={deleteimage.bind(this,image.id)}>Delete</button></td>
                                               </tr>
                                             ))}

@@ -4,12 +4,15 @@ import Pagination from '../Pagination/index'
 import queryString from 'query-string'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
-import { useLocation } from "react-router-dom";
+import { CheckChangeContext } from '../Context/CheckChangeContext';
 import { success } from '../Helper/Notification';
 import Search from '../Search';
+
+
 export default function Invoice() {
 
     const check = useContext(LoginContext);
+    const checkStatusInvoice = useContext(CheckChangeContext);
     const history = useHistory()
 
     const [pagination, setPagination] = useState({
