@@ -32,6 +32,7 @@ export default function Login() {
                 
             }).catch((error) =>{
                 setErrorMessage( "username or password is not correct" );
+                setIsLoading(false)
             });
         }
        
