@@ -4,16 +4,25 @@ import Api from '../Config/Api';
 export default function UserOfRole() {
     const history = useHistory();
     const [ListUserOfRole , setListUserOfRole] = useState([]);
+    let id = window.location.pathname.split('/')
+    const [role, setRole] = useState("")
     useEffect(() => {
-        let id = window.location.pathname.split('/')
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
-
-        Api.get(`/role/userRole/${id[id.length-1]}`, token).then((response)=> {
-            setListUserOfRole(response.data.content);
+        if(id[id.length-1] !== "3"){
+            (id[id.length-1] === "1") ? setRole("Admin") : setRole("Employee");
+            Api.get(`/role/userRole/${id[id.length-1]}`, token).then((response)=> {
+                setListUserOfRole(response.data.content);
             }).catch((error) =>{
-        });
+            });
+        }else{
+            setRole("Customer")
+            Api.get(`admin/user/customer`, token).then((response)=> {
+                setListUserOfRole(response.data.content);
+            }).catch((error) =>{
+            });
+        }
         
     }, [])
     return (
@@ -28,7 +37,7 @@ export default function UserOfRole() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List User Of Role <button className="btn1 btn btn-info" onClick ={e => {history.push("/role")}}>Back</button></h4>
+                                        <h4 className="card-title">List User Of {role} <button className="btn1 btn btn-info" onClick ={e => {history.push("/role")}}>Back</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

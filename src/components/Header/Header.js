@@ -27,25 +27,7 @@ function Header() {
                     </div>
                 </div>
                 <div className="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
-
                     <ul className="navbar-nav float-left mr-auto">
-
-                        <li className="nav-item search-box">
-                            <a className="nav-link waves-effect waves-dark" href="a">
-                                <div className="d-flex align-items-center">
-                                    <i className="mdi mdi-magnify font-20 mr-1"></i>
-                                    <div className="ml-1 d-none d-sm-block">
-                                        <span>Search</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div className="form app-search position-absolute">
-                                <input type="text" className="form-control" placeholder="Search &amp; enter"></input>
-                                <a className="srh-btn">
-                                    <i className="ti-close"></i>
-                                </a>
-                            </div>
-                        </li>
                     </ul>
                     { login.IsLogin ? (
                         <ul className="navbar-nav float-right">
