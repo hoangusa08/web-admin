@@ -77,7 +77,7 @@ export default function Sale() {
                                     ],
                                     datasets: [
                                         {
-                                        label: "Monthly revenue (Million VND)",
+                                        label: "Monthly revenue (VND)",
                                         backgroundColor: [
                                             "#c45851",
                                             "#c45852",
