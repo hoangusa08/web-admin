@@ -88,7 +88,7 @@ export default function EditCustomer(props) {
                             <div className="form-group">
                                 <label>Email</label>
                                 <input type="text" className="form-control" 
-                                onChange={e => setUser({...user ,email : e.target.value})} value={user.email}/>
+                                onChange={e => setUser({...user ,email : e.target.value})} value={user.email} disabled/>
                             </div>
                             <div className="form-group">
                                 <label>Address</label>
